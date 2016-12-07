@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Utilities</string>
+
+    <string name="title_empty_fields">Campos incompletos</string>
+    <string name="text_aceptar">ACEPTAR</string>
+    <string name="text_correo_electronico">Correo electrónico</string>
+    <string name="text_contrasenia">Contraseña</string>
+    <string name="text_ingresar_ahora">Ingresar ahora</string>
+    <string name="text_please_wait">Por favor espere...</string>
+    <string name="text_empty_email">Debes ingresar tu correo electrónico.</string>
+    <string name="text_empty_password">Debes ingresar una contraseña.</string>
+    <string name="text_incorrect_email">Correo electrónico no válido, por favor verifique.</string>
+
+    <string name="title_appreciated_user">Apreciado usuario</string>
+    <string name="text_validate_internet">Por favor verifica que tu dispositivo tenga acceso a internet e intenta nuevamente.</string>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Utilities/Utilities.iml" filepath="$PROJECT_DIR$/Utilities/Utilities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VentaTiquetes.iml" filepath="$PROJECT_DIR$/VentaTiquetes.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VentaTiquetesDomain/VentaTiquetesDomain.iml" filepath="$PROJECT_DIR$/VentaTiquetesDomain/VentaTiquetesDomain.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VentaTiquetesPresentation/VentaTiquetesPresentation.iml" filepath="$PROJECT_DIR$/VentaTiquetesPresentation/VentaTiquetesPresentation.iml" />
+    </modules>
+  </component>
+</project>
