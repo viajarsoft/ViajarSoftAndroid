@@ -6,15 +6,16 @@ package com.app.viajarsoft.ventatiquetesdomain.business_models;
 
 public class UsuarioRequest {
 
-    private String correoElectronico;
+    private String usuario;
     private String contrasenia;
+    private String ipUsuario;
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getContrasenia() {
@@ -23,5 +24,13 @@ public class UsuarioRequest {
 
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
+    }
+
+    public String getIpUsuario() {
+        return ipUsuario;
+    }
+
+    public void setIpUsuario(String ipUsuario) {
+        this.ipUsuario = ipUsuario;
     }
 }

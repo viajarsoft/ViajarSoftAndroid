@@ -12,8 +12,8 @@ import com.app.viajarsoft.ventatiquetes.presenters.LoginPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILoginView;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Usuario;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 
 
 public class LoginActivity extends BaseActivity<LoginPresenter> implements ILoginView {
@@ -55,7 +55,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
 
     private void prepareDataToLogin() {
         UsuarioRequest usuarioRequest = new UsuarioRequest();
-        usuarioRequest.setCorreoElectronico(login_etCorreoElectronico.getText().toString().trim());
+        usuarioRequest.setUsuario(login_etCorreoElectronico.getText().toString().trim());
         usuarioRequest.setContrasenia(login_etContrasenia.getText().toString().trim());
         getPresenter().validateFieldsToLogin(usuarioRequest);
     }
@@ -66,9 +66,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     }
 
     @Override
-    public void startLanding(Usuario usuario) {
+    public void startLanding(UsuarioResponse usuarioResponse) {
         Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
-        intent.putExtra(IConstants.USUARIO, usuario);
+        intent.putExtra(IConstants.USUARIO, usuarioResponse);
         startActivity(intent);
     }
 }

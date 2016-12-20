@@ -1,15 +1,17 @@
 package com.app.viajarsoft.ventatiquetes.helpers;
 
 
-import com.app.viajarsoft.ventatiquetes.dto.MensajeDTO;
-import com.app.viajarsoft.ventatiquetes.dto.UsuarioDTO;
+import com.app.viajarsoft.ventatiquetes.dto.UsuarioRequestDTO;
+import com.app.viajarsoft.ventatiquetes.dto.UsuarioResponseDTO;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DTO.ErrorDTO;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Usuario;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 
 import java.io.InterruptedIOException;
 import java.net.SocketTimeoutException;
+
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -18,36 +20,6 @@ import retrofit.client.Response;
  */
 
 public class Mapper {
-    public static Usuario convertUsuarioDTOToDomain(UsuarioDTO usuarioDTO) {
-        Usuario usuario = new Usuario();
-        usuario.setApellido(usuarioDTO.getApellidos());
-        usuario.setCelular(usuarioDTO.getCelular());
-        usuario.setCorreoAlternativo(usuarioDTO.getCorreoAlternativo());
-        usuario.setCorreoElectronico(usuarioDTO.getCorreoElectronico());
-        usuario.setDireccion(usuarioDTO.getDireccion());
-        usuario.setEnvioNotificacion(usuarioDTO.isEnvioNotificacion());
-        usuario.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
-        usuario.setIdGenero(usuarioDTO.getIdGenero());
-        usuario.setNombres(usuarioDTO.getNombres());
-        usuario.setNumeroIdentificacion(usuarioDTO.getNumeroIdentificacion());
-        usuario.setPais(usuarioDTO.getPais());
-        usuario.setTelefono(usuarioDTO.getTelefono());
-        usuario.setIdTipoIdentificacion(usuarioDTO.getIdTipoIdentificacion());
-        usuario.setIdTipoPersona(usuarioDTO.getIdTipoPersona());
-        usuario.setIdTipoVivienda(usuarioDTO.getIdTipoVivienda());
-        usuario.setToken(usuarioDTO.getToken());
-        usuario.setActivo(usuarioDTO.isActivo());
-        usuario.setFechaRegistro(usuarioDTO.getFechaRegistro());
-        usuario.setAceptoTerminosyCondiciones(usuarioDTO.isAceptoTerminosyCondiciones());
-        usuario.setIdUsuario(usuarioDTO.getIdUsuario());
-        return usuario;
-    }
-
-    public static RepositoryError convertMensajeDTOToRepositoryError(MensajeDTO mensaje) {
-        RepositoryError repositoryError = new RepositoryError(mensaje.getTexto());
-        repositoryError.setIdError(mensaje.getCodigo());
-        return repositoryError;
-    }
 
     public static RepositoryError convertRetrofitErrorToRepositoryError(RetrofitError retrofitError) {
 
@@ -80,7 +52,7 @@ public class Mapper {
             if (errorId == IConstants.UNAUTHORIZED_ERROR_CODE || errorId == IConstants.NOT_FOUND_ERROR_CODE) {
                 ErrorDTO errorDTO = (ErrorDTO) retrofitError.getBodyAs(ErrorDTO.class);
                 if (errorDTO != null) {
-                    repositoryError = new RepositoryError(errorDTO.getMessage());
+                    repositoryError = new RepositoryError(errorDTO.getMensaje());
                 } else {
                     repositoryError = new RepositoryError(IConstants.DEFAUL_ERROR);
                 }
@@ -100,5 +72,22 @@ public class Mapper {
             return repositoryError;
         }
         return null;
+    }
+
+    public static UsuarioRequestDTO convertUsuarioRequestDomainToDTO(UsuarioRequest usuarioRequest) {
+        UsuarioRequestDTO usuarioRequestDTO = new UsuarioRequestDTO();
+        usuarioRequestDTO.setClave(usuarioRequest.getContrasenia());
+        usuarioRequestDTO.setUsuario(usuarioRequest.getUsuario());
+        usuarioRequestDTO.setIpUsuario("10.1.1.1");
+        return usuarioRequestDTO;
+    }
+
+    public static UsuarioResponse convertUsuarioResponseDTOToDomain(UsuarioResponseDTO usuarioResponseDTO) {
+        UsuarioResponse usuarioResponse = new UsuarioResponse();
+        usuarioResponse.setCodigoOficina(usuarioResponseDTO.getCodigoOficina());
+        usuarioResponse.setCodigoTaquilla(usuarioResponseDTO.getCodigoTaquilla());
+        usuarioResponse.setIdentificadorEmpresa(usuarioResponseDTO.getIdentificadorEmpresa());
+        usuarioResponse.setToken(usuarioResponseDTO.getToken());
+        return usuarioResponse;
     }
 }

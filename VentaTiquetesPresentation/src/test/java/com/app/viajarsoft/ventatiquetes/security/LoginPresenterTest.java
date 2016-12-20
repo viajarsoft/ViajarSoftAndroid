@@ -8,8 +8,8 @@ import com.app.viajarsoft.ventatiquetes.utilities.helpers.IValidateInternet;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILoginView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Usuario;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.security.ISecurityRepository;
 import com.app.viajarsoft.ventatiquetesdomain.security.SecurityBL;
 
@@ -56,7 +56,7 @@ public class LoginPresenterTest {
 
     private UsuarioRequest getUsuarioResponseInstance() {
         UsuarioRequest usuarioRequest = new UsuarioRequest();
-        usuarioRequest.setCorreoElectronico("lcz97@live.com");
+        usuarioRequest.setUsuario("lcz97@live.com");
         usuarioRequest.setContrasenia("test");
         return usuarioRequest;
     }
@@ -64,12 +64,11 @@ public class LoginPresenterTest {
     @Test
     public void methodValidateFieldsToLoginWithEmptyEmailShouldShowAlertDialog() {
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        usuarioRequest.setCorreoElectronico(IConstants.EMPTY_STRING);
+        usuarioRequest.setUsuario(IConstants.EMPTY_STRING);
         loginPresenter.validateFieldsToLogin(usuarioRequest);
 
-        verify(loginView).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_email);
-        verify(loginView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_password);
-        verify(loginPresenter, never()).validateEmail(usuarioRequest);
+        verify(loginView).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_fields);
+        verify(loginPresenter, never()).validateInternetToLogin(usuarioRequest);
     }
 
     @Test
@@ -78,9 +77,8 @@ public class LoginPresenterTest {
         usuarioRequest.setContrasenia(IConstants.EMPTY_STRING);
         loginPresenter.validateFieldsToLogin(usuarioRequest);
 
-        verify(loginView).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_password);
-        verify(loginView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_email);
-        verify(loginPresenter, never()).validateEmail(usuarioRequest);
+        verify(loginView).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_fields);
+        verify(loginPresenter, never()).validateInternetToLogin(usuarioRequest);
     }
 
     @Test
@@ -88,48 +86,10 @@ public class LoginPresenterTest {
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
         loginPresenter.validateFieldsToLogin(usuarioRequest);
 
-        verify(loginPresenter).validateEmail(usuarioRequest);
-        verify(loginView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_password);
-        verify(loginView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_email);
-    }
-
-    @Test
-    public void methodValidateEmailWithoutAtAndDomainShouldShowAlertDialog() {
-        UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        usuarioRequest.setCorreoElectronico("llll");
-        loginPresenter.validateEmail(usuarioRequest);
-
-        verify(loginView).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_incorrect_email);
-        verify(loginPresenter, never()).validateInternetToLogin(usuarioRequest);
-    }
-
-    @Test
-    public void methodValidateEmailWithoutAtShouldShowAlertDialog() {
-        UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        usuarioRequest.setCorreoElectronico("llll.com");
-        loginPresenter.validateEmail(usuarioRequest);
-
-        verify(loginView).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_incorrect_email);
-        verify(loginPresenter, never()).validateInternetToLogin(usuarioRequest);
-    }
-
-    @Test
-    public void methodValidateEmailWithoutDomainShouldShowAlertDialog() {
-        UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        usuarioRequest.setCorreoElectronico("llll@");
-        loginPresenter.validateEmail(usuarioRequest);
-
-        verify(loginView).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_incorrect_email);
-        verify(loginPresenter, never()).validateInternetToLogin(usuarioRequest);
-    }
-
-    @Test
-    public void methodValidateEmailWithCorrectEmailShouldCallMethodValidateInternet() {
-        UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        loginPresenter.validateEmail(usuarioRequest);
         verify(loginPresenter).validateInternetToLogin(usuarioRequest);
-        verify(loginView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_incorrect_email);
+        verify(loginView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_fields);
     }
+
 
     @Test
     public void methodValidateInternetWithoutConnectionShoudlShowAlertDialog() {
@@ -158,9 +118,9 @@ public class LoginPresenterTest {
     @Test
     public void methodLoginShouldCalMethodLoginInSecurityBL() throws RepositoryError {
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        Usuario usuario = new Usuario();
-        usuario.setToken("sgg65456");
-        when(securityRepository.login(usuarioRequest)).thenReturn(usuario);
+        UsuarioResponse usuarioResponse = new UsuarioResponse();
+        usuarioResponse.setToken("sgg65456");
+        when(securityRepository.login(usuarioRequest)).thenReturn(usuarioResponse);
         loginPresenter.login(usuarioRequest);
         verify(securityBL).login(usuarioRequest);
     }
@@ -168,21 +128,21 @@ public class LoginPresenterTest {
     @Test
     public void methodLoginShouldCallMethodSaveToken() throws RepositoryError {
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        Usuario usuario = new Usuario();
-        usuario.setToken("sgg65456");
-        when(securityRepository.login(usuarioRequest)).thenReturn(usuario);
+        UsuarioResponse usuarioResponse = new UsuarioResponse();
+        usuarioResponse.setToken("sgg65456");
+        when(securityRepository.login(usuarioRequest)).thenReturn(usuarioResponse);
         loginPresenter.login(usuarioRequest);
-        verify(loginView).saveToken(usuario.getToken());
+        verify(loginView).saveToken(usuarioResponse.getToken());
     }
 
     @Test
     public void methodLoginShouldCallMethodStartLanding() throws RepositoryError {
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        Usuario usuario = new Usuario();
-        usuario.setToken("sgg65456");
-        when(securityRepository.login(usuarioRequest)).thenReturn(usuario);
+        UsuarioResponse usuarioResponse = new UsuarioResponse();
+        usuarioResponse.setToken("sgg65456");
+        when(securityRepository.login(usuarioRequest)).thenReturn(usuarioResponse);
         loginPresenter.login(usuarioRequest);
-        verify(loginView).startLanding(usuario);
+        verify(loginView).startLanding(usuarioResponse);
     }
 
     @Test
@@ -198,9 +158,9 @@ public class LoginPresenterTest {
     @Test
     public void methodLoginShouldCallMethodHideProgressDialog() throws RepositoryError {
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        Usuario usuario = new Usuario();
-        usuario.setToken("sgg65456");
-        when(securityRepository.login(usuarioRequest)).thenReturn(usuario);
+        UsuarioResponse usuarioResponse = new UsuarioResponse();
+        usuarioResponse.setToken("sgg65456");
+        when(securityRepository.login(usuarioRequest)).thenReturn(usuarioResponse);
         loginPresenter.login(usuarioRequest);
         verify(loginView).dismissProgressDialog();
     }

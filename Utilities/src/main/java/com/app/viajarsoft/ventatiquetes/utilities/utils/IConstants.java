@@ -11,9 +11,7 @@ public interface IConstants {
     /**
      * URLs
      */
-    String URL_PRODUCCION_EPM = "https://appmovil.epm.com.co/WSAppMovil/V1_0/api";
-    String URL_DLLO_EPM = "https://appmovildllo.epm.com.co/WSAppMovil/V1_0/api";
-    String URL_UAT_EPM = "https://appmoviluat.epm.com.co/WSAppMovil/V1_0/api";
+    String URL_DLLO = "http://apivs.azurewebsites.net/api";
 
     /**
      * Keys

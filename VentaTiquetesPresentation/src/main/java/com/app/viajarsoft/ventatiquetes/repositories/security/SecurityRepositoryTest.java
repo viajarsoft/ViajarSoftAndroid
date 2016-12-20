@@ -2,8 +2,8 @@ package com.app.viajarsoft.ventatiquetes.repositories.security;
 
 
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Usuario;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.security.ISecurityRepository;
 
 /**
@@ -13,9 +13,9 @@ import com.app.viajarsoft.ventatiquetesdomain.security.ISecurityRepository;
 public class SecurityRepositoryTest implements ISecurityRepository {
 
     @Override
-    public Usuario login(UsuarioRequest usuarioRequest) throws RepositoryError {
-        Usuario usuario = new Usuario();
-        usuario.setToken("sfgsfgsfg46465");
-        return usuario;
+    public UsuarioResponse login(UsuarioRequest usuarioRequest) throws RepositoryError {
+        UsuarioResponse usuarioResponse = new UsuarioResponse();
+        usuarioResponse.setToken("sfgsfgsfg46465");
+        return usuarioResponse;
     }
 }

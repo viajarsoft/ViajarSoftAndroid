@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Utilities/Utilities.iml" filepath="$PROJECT_DIR$/Utilities/Utilities.iml" />
-      <module fileurl="file://$PROJECT_DIR$/VentaTiquetes.iml" filepath="$PROJECT_DIR$/VentaTiquetes.iml" />
       <module fileurl="file://$PROJECT_DIR$/VentaTiquetesDomain/VentaTiquetesDomain.iml" filepath="$PROJECT_DIR$/VentaTiquetesDomain/VentaTiquetesDomain.iml" />
       <module fileurl="file://$PROJECT_DIR$/VentaTiquetesPresentation/VentaTiquetesPresentation.iml" filepath="$PROJECT_DIR$/VentaTiquetesPresentation/VentaTiquetesPresentation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ViajarSoft.Tiquetes.Android.iml" filepath="$PROJECT_DIR$/ViajarSoft.Tiquetes.Android.iml" />
     </modules>
   </component>
 </project>

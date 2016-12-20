@@ -3,8 +3,8 @@ package com.app.viajarsoft.ventatiquetes.security;
 
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Usuario;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.security.ISecurityRepository;
 import com.app.viajarsoft.ventatiquetesdomain.security.SecurityBL;
 
@@ -41,7 +41,7 @@ public class SecurityBLTest {
 
     private UsuarioRequest getUsuarioResponseInstance() {
         UsuarioRequest usuarioRequest = new UsuarioRequest();
-        usuarioRequest.setCorreoElectronico("lcz97@live.com");
+        usuarioRequest.setUsuario("lcz97@live.com");
         usuarioRequest.setContrasenia("test");
         return usuarioRequest;
     }
@@ -58,7 +58,7 @@ public class SecurityBLTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(IConstants.NULL_PARAMETERS);
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        usuarioRequest.setCorreoElectronico(null);
+        usuarioRequest.setUsuario(null);
         securityBL.login(usuarioRequest);
     }
 
@@ -76,7 +76,7 @@ public class SecurityBLTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(IConstants.EMPTY_PARAMETERS);
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        usuarioRequest.setCorreoElectronico(IConstants.EMPTY_STRING);
+        usuarioRequest.setUsuario(IConstants.EMPTY_STRING);
         securityBL.login(usuarioRequest);
     }
 
@@ -99,10 +99,10 @@ public class SecurityBLTest {
     @Test
     public void methodLoginShouldReturnAnUsuarioWhenCallLoginInRepository() throws RepositoryError {
         UsuarioRequest usuarioRequest = getUsuarioResponseInstance();
-        Usuario usuario = new Usuario();
-        usuario.setToken("sgg65456");
-        when(securityRepository.login(usuarioRequest)).thenReturn(usuario);
-        Usuario result = securityBL.login(usuarioRequest);
-        Assert.assertEquals(usuario, result);
+        UsuarioResponse usuarioResponse = new UsuarioResponse();
+        usuarioResponse.setToken("sgg65456");
+        when(securityRepository.login(usuarioRequest)).thenReturn(usuarioResponse);
+        UsuarioResponse result = securityBL.login(usuarioRequest);
+        Assert.assertEquals(usuarioResponse, result);
     }
 }

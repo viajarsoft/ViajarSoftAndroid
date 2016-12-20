@@ -2,6 +2,7 @@
     <string name="app_name">Utilities</string>
 
     <string name="title_empty_fields">Campos incompletos</string>
+    <string name="text_empty_fields">Debes ingresar todos los campos.</string>
     <string name="text_aceptar">ACEPTAR</string>
     <string name="text_correo_electronico">Correo electrónico</string>
     <string name="text_contrasenia">Contraseña</string>

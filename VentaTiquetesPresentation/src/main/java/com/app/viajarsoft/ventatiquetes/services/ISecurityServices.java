@@ -1,9 +1,10 @@
 package com.app.viajarsoft.ventatiquetes.services;
 
+import com.app.viajarsoft.ventatiquetes.dto.UsuarioRequestDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioResponseDTO;
 
-import retrofit.http.GET;
-import retrofit.http.Query;
+import retrofit.http.Body;
+import retrofit.http.POST;
 
 /**
  * Created by josetabaresramirez on 15/11/16.
@@ -11,6 +12,6 @@ import retrofit.http.Query;
 
 public interface ISecurityServices {
 
-    @GET("/AdministracionUsuario/Autenticar")
-    UsuarioResponseDTO login(@Query("CorreoElectronico") String correoElectronico, @Query("Contrasenia") String contrasenia);
+    @POST("/Seguridad/Login")
+    UsuarioResponseDTO login(@Body UsuarioRequestDTO usuarioRequestDTO);
 }

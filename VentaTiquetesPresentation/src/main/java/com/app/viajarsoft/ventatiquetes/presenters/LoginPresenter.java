@@ -2,11 +2,10 @@ package com.app.viajarsoft.ventatiquetes.presenters;
 
 
 import com.app.viajarsoft.ventatiquetes.R;
-import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILoginView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Usuario;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.security.SecurityBL;
 
 /**
@@ -22,25 +21,13 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     public void validateFieldsToLogin(UsuarioRequest usuarioRequest) {
-        if (usuarioRequest.getCorreoElectronico().isEmpty()) {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_email);
-            return;
-        }
-        if (usuarioRequest.getContrasenia().isEmpty()) {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_password);
-            return;
-        }
-        validateEmail(usuarioRequest);
-    }
-
-
-    public void validateEmail(UsuarioRequest usuarioRequest) {
-        if (usuarioRequest.getCorreoElectronico().matches(IConstants.REGULAR_EXPRESSION_CORRECT_EMAIL)) {
-            validateInternetToLogin(usuarioRequest);
+        if (usuarioRequest.getUsuario().isEmpty() || usuarioRequest.getContrasenia().isEmpty()) {
+            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_empty_fields);
         } else {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_empty_fields, R.string.text_incorrect_email);
+            validateInternetToLogin(usuarioRequest);
         }
     }
+
 
     public void validateInternetToLogin(UsuarioRequest usuarioRequest) {
         if (getValidateInternet().isConnected()) {
@@ -63,9 +50,9 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
     public void login(UsuarioRequest usuarioRequest) {
         try {
-            Usuario usuario = securityBL.login(usuarioRequest);
-            getView().saveToken(usuario.getToken());
-            getView().startLanding(usuario);
+            UsuarioResponse usuarioResponse = securityBL.login(usuarioRequest);
+            getView().saveToken(usuarioResponse.getToken());
+            getView().startLanding(usuarioResponse);
         } catch (RepositoryError repositoryError) {
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
         } finally {

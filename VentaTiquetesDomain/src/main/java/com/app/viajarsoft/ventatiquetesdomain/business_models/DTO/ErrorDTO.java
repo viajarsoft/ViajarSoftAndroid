@@ -6,13 +6,13 @@ package com.app.viajarsoft.ventatiquetesdomain.business_models.DTO;
 
 public class ErrorDTO {
 
-    private String Message;
+    private String Mensaje;
 
-    public String getMessage() {
-        return Message;
+    public String getMensaje() {
+        return Mensaje;
     }
 
-    public void setMessage(String message) {
-        Message = message;
+    public void setMensaje(String mensaje) {
+        Mensaje = mensaje;
     }
 }

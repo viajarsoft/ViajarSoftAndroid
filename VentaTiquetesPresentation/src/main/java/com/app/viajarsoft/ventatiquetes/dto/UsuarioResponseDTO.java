@@ -6,22 +6,40 @@ package com.app.viajarsoft.ventatiquetes.dto;
 
 public class UsuarioResponseDTO {
 
-    private MensajeDTO Mensaje;
-    private UsuarioDTO Usuario;
+    private String Token;
+    private String CodigoOficina;
+    private String CodigoTaquilla;
+    private String IdentificadorEmpresa;
 
-    public MensajeDTO getMensaje() {
-        return Mensaje;
+    public String getToken() {
+        return Token;
     }
 
-    public void setMensaje(MensajeDTO mensaje) {
-        Mensaje = mensaje;
+    public void setToken(String token) {
+        Token = token;
     }
 
-    public UsuarioDTO getUsuario() {
-        return Usuario;
+    public String getCodigoOficina() {
+        return CodigoOficina;
     }
 
-    public void setUsuario(UsuarioDTO usuario) {
-        Usuario = usuario;
+    public void setCodigoOficina(String codigoOficina) {
+        CodigoOficina = codigoOficina;
+    }
+
+    public String getCodigoTaquilla() {
+        return CodigoTaquilla;
+    }
+
+    public void setCodigoTaquilla(String codigoTaquilla) {
+        CodigoTaquilla = codigoTaquilla;
+    }
+
+    public String getIdentificadorEmpresa() {
+        return IdentificadorEmpresa;
+    }
+
+    public void setIdentificadorEmpresa(String identificadorEmpresa) {
+        IdentificadorEmpresa = identificadorEmpresa;
     }
 }
