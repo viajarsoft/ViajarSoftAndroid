@@ -14,4 +14,8 @@
 
     <string name="title_appreciated_user">Apreciado usuario</string>
     <string name="text_validate_internet">Por favor verifica que tu dispositivo tenga acceso a internet e intenta nuevamente.</string>
+
+    <string name="title_vender_pasajes">Vender pasajes</string>
+    <string name="title_liquidar_ventas">Liquidar ventas</string>
+    <string name="title_viajar_soft">Viajar soft</string>
 </resources>

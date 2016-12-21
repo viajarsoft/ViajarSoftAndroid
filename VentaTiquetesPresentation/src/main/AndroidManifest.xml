@@ -21,7 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.activities.MainActivity" />
-        <activity android:name=".view.activities.LandingActivity"></activity>
+        <activity android:name=".view.activities.LandingActivity" />
+        <activity android:name=".view.activities.VenderPasajesActivity" />
+        <activity android:name=".view.activities.LiquidarVentasActivity"></activity>
     </application>
 
 </manifest>
