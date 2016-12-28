@@ -12,6 +12,7 @@ public class UsuarioResponse implements Serializable{
     private String codigoOficina;
     private String codigoTaquilla;
     private String identificadorEmpresa;
+    private String nombreOficina;
 
     public String getToken() {
         return token;
@@ -43,5 +44,13 @@ public class UsuarioResponse implements Serializable{
 
     public void setIdentificadorEmpresa(String identificadorEmpresa) {
         this.identificadorEmpresa = identificadorEmpresa;
+    }
+
+    public String getNombreOficina() {
+        return nombreOficina;
+    }
+
+    public void setNombreOficina(String nombreOficina) {
+        this.nombreOficina = nombreOficina;
     }
 }

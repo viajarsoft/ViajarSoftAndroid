@@ -1,16 +1,28 @@
 package com.app.viajarsoft.ventatiquetes.helpers;
 
 
+import android.support.annotation.Nullable;
+
+import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.RutaDTO;
+import com.app.viajarsoft.ventatiquetes.dto.TipoBusDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioRequestDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioResponseDTO;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DTO.ErrorDTO;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 import java.io.InterruptedIOException;
 import java.net.SocketTimeoutException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -88,6 +100,48 @@ public class Mapper {
         usuarioResponse.setCodigoTaquilla(usuarioResponseDTO.getCodigoTaquilla());
         usuarioResponse.setIdentificadorEmpresa(usuarioResponseDTO.getIdentificadorEmpresa());
         usuarioResponse.setToken(usuarioResponseDTO.getToken());
+        usuarioResponse.setNombreOficina(usuarioResponseDTO.getNombreOficina());
         return usuarioResponse;
+    }
+
+    public static BussesAndRoutes convertBussesAndRoutesDTOToDomain(BussesAndRoutesDTO bussesAndRoutesDTO) {
+        BussesAndRoutes bussesAndRoutes = new BussesAndRoutes();
+        bussesAndRoutes.setRutas(convertListRutasDTOToDomain(bussesAndRoutesDTO.getRutas()));
+        bussesAndRoutes.setTiposBuses(convertListTipoBusesDTOToDomain(bussesAndRoutesDTO.getTiposBus()));
+        return bussesAndRoutes;
+    }
+
+    private static ArrayList<TipoBus> convertListTipoBusesDTOToDomain(List<TipoBusDTO> tipoBusDTOs) {
+        if (tipoBusDTOs != null) {
+            return new ArrayList<>(Lists.transform(tipoBusDTOs, new Function<TipoBusDTO, TipoBus>() {
+                @Nullable
+                @Override
+                public TipoBus apply(TipoBusDTO tipoBusDTO) {
+                    TipoBus tipoBus = new TipoBus();
+                    tipoBus.setTipo(tipoBusDTO.getTipo());
+                    tipoBus.setDescripcion(tipoBusDTO.getDescripcion());
+                    return tipoBus;
+                }
+            }));
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    private static ArrayList<Ruta> convertListRutasDTOToDomain(List<RutaDTO> rutaDTOs) {
+        if (rutaDTOs != null) {
+             return new ArrayList<>(Lists.transform(rutaDTOs, new Function<RutaDTO, Ruta>() {
+                 @Nullable
+                 @Override
+                 public Ruta apply(RutaDTO rutaDTO) {
+                     Ruta ruta = new Ruta();
+                     ruta.setCodigo(rutaDTO.getCodigo());
+                     ruta.setDescripcion(rutaDTO.getDescripcion());
+                     return ruta;
+                 }
+             }));
+        } else {
+            return new ArrayList<>();
+        }
     }
 }

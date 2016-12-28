@@ -10,6 +10,7 @@ import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.dependency_injection.DomainModule;
 import com.app.viajarsoft.ventatiquetes.presenters.LoginPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
+import com.app.viajarsoft.ventatiquetes.utilities.helpers.ICustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILoginView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
@@ -22,11 +23,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     private EditText login_etContrasenia;
     private Button login_btnIngresarAhora;
 
+    private ICustomSharedPreferences customSharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setPresenter(new LoginPresenter(DomainModule.getSecurityBLInstance(new CustomSharedPreferences(this))));
+        this.customSharedPreferences = new CustomSharedPreferences(this);
+        setPresenter(new LoginPresenter(DomainModule.getSecurityBLInstance(customSharedPreferences)));
         getPresenter().inject(this, getValidateInternet());
         createProgressDialog();
         loadViews();
@@ -62,7 +66,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
 
     @Override
     public void saveToken(String token) {
-        //TODO implementar.
+        customSharedPreferences.addString(IConstants.TOKEN, token);
     }
 
     @Override

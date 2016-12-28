@@ -18,4 +18,6 @@
     <string name="title_vender_pasajes">Vender pasajes</string>
     <string name="title_liquidar_ventas">Liquidar ventas</string>
     <string name="title_viajar_soft">Viajar soft</string>
+    <string name="text_tipo_bus">Tipo de bus</string>
+    <string name="text_rutas">Rutas</string>
 </resources>

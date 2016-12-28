@@ -46,6 +46,7 @@ public class ServicesFactory {
             @Override
             public void intercept(RequestFacade requestFacade) {
                 requestFacade.addHeader("Accept", "application/json");
+                requestFacade.addHeader("X-Api-Version", "1");
                 String token = customSharedPreferences.getString(IConstants.TOKEN);
                 String idSuscripcionOneSignal = customSharedPreferences.getString(IConstants.ID_SUSCRIPTION_ONE_SIGNAL);
                 if (token != null) {

@@ -19,7 +19,10 @@ public interface IConstants {
     String MY_PREFERENCES = "myPreferences";
     String ID_SUSCRIPTION_ONE_SIGNAL = "idSuscripcionOneSignal";
     String USUARIO = "usuario";
-    String TOKEN = "authtoken";
+    String BUSSES_AND_ROUTES = "bussesAndRoutes";
+
+
+    String TOKEN = "valorToken";
 
 
     /**
@@ -27,12 +30,10 @@ public interface IConstants {
      */
     String EMPTY_STRING = "";
 
-
     /**
      * Numbers
      */
     long THIRTY = 30;
-
     String REGULAR_EXPRESSION_CORRECT_EMAIL = "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
             + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
             + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
@@ -48,5 +49,7 @@ public interface IConstants {
     int DEFAUL_ERROR_CODE = 0;
     String REQUEST_TIMEOUT_ERROR_MESSAGE = "La solicitud está tardando demasiado. Por favor inténtalo nuevamente.";
     int UNAUTHORIZED_ERROR_CODE = 401;
+
     int NOT_FOUND_ERROR_CODE = 404;
+    String SELECT = "Seleccione...";
 }

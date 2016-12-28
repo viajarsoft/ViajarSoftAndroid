@@ -10,6 +10,7 @@ public class UsuarioResponseDTO {
     private String CodigoOficina;
     private String CodigoTaquilla;
     private String IdentificadorEmpresa;
+    private String NombreOficina;
 
     public String getToken() {
         return Token;
@@ -41,5 +42,13 @@ public class UsuarioResponseDTO {
 
     public void setIdentificadorEmpresa(String identificadorEmpresa) {
         IdentificadorEmpresa = identificadorEmpresa;
+    }
+
+    public String getNombreOficina() {
+        return NombreOficina;
+    }
+
+    public void setNombreOficina(String nombreOficina) {
+        NombreOficina = nombreOficina;
     }
 }
