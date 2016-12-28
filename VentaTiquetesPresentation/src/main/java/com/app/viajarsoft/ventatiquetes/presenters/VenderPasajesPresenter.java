@@ -24,23 +24,17 @@ public class VenderPasajesPresenter extends BasePresenter<IVenderPasajesView> {
         }
     }
 
-    public void validateInternetToGetTickets(Viaje viaje) {
+    public void validateInternetToGetTickets(final Viaje viaje) {
         if (getValidateInternet().isConnected()) {
-            createThreadToGetTickets(viaje);
+            createThreadToExecuteAnAction(new Runnable() {
+                @Override
+                public void run() {
+                    getTickets(viaje);
+                }
+            });
         } else {
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
         }
-    }
-
-    public void createThreadToGetTickets(final Viaje viaje) {
-        getView().showProgressDialog(R.string.text_please_wait);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getTickets(viaje);
-            }
-        });
-        thread.start();
     }
 
     public void getTickets(Viaje viaje) {
@@ -51,5 +45,34 @@ public class VenderPasajesPresenter extends BasePresenter<IVenderPasajesView> {
         } finally {
             getView().dismissProgressDialog();
         }
+    }
+
+    public void validateInternetToGetDestinationsPrices(final Viaje viaje) {
+        if (getValidateInternet().isConnected()) {
+            createThreadToExecuteAnAction(new Runnable() {
+                @Override
+                public void run() {
+                    getDestinationPrices(viaje);
+                }
+            });
+        } else {
+            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
+        }
+    }
+
+    public void getDestinationPrices(Viaje viaje) {
+        try {
+            getView().loadDestinationPricesOnUiThread(viajeBL.getDestinationPrices(viaje));
+        } catch (RepositoryError repositoryError) {
+            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+        } finally {
+            getView().dismissProgressDialog();
+        }
+    }
+
+    public void createThreadToExecuteAnAction(Runnable runnable) {
+        getView().showProgressDialog(R.string.text_please_wait);
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 }

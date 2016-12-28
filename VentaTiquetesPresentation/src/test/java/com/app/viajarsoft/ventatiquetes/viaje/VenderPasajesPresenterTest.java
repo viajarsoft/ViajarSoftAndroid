@@ -5,6 +5,7 @@ import com.app.viajarsoft.ventatiquetes.presenters.VenderPasajesPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.IValidateInternet;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.IVenderPasajesView;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
@@ -21,6 +22,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -90,7 +92,7 @@ public class VenderPasajesPresenterTest {
         venderPasajesPresenter.validateInternetToGetTickets(viaje);
 
         verify(venderPasajesView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
-        verify(venderPasajesPresenter, never()).createThreadToGetTickets(viaje);
+        verify(venderPasajesPresenter, never()).createThreadToExecuteAnAction((Runnable) anyObject());
     }
 
     @Test
@@ -100,14 +102,15 @@ public class VenderPasajesPresenterTest {
 
         venderPasajesPresenter.validateInternetToGetTickets(viaje);
 
-        verify(venderPasajesPresenter).createThreadToGetTickets(viaje);
+        verify(venderPasajesPresenter).createThreadToExecuteAnAction((Runnable) anyObject());
+        verify(venderPasajesPresenter).getTickets(viaje);
         verify(venderPasajesView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
     }
 
     @Test
     public void methodCreateThreadToGetTicketsShouldCallShowProgressDialog() {
 
-        venderPasajesPresenter.createThreadToGetTickets(getViaje());
+        venderPasajesPresenter.createThreadToExecuteAnAction((Runnable) anyObject());
 
         verify(venderPasajesView).showProgressDialog(R.string.text_please_wait);
     }
@@ -148,10 +151,68 @@ public class VenderPasajesPresenterTest {
         verify(venderPasajesView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
     }
 
+    @Test
+    public void methodValidateInternetToGetDestinationPricesWithoutConnectionShouldShow() {
+        when(validateInternet.isConnected()).thenReturn(false);
+        Viaje viaje = getViaje();
+
+        venderPasajesPresenter.validateInternetToGetDestinationsPrices(viaje);
+
+        verify(venderPasajesView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
+        verify(venderPasajesPresenter, never()).createThreadToExecuteAnAction((Runnable) anyObject());
+    }
+
+    @Test
+    public void methodValidateInternetToGetDestinationPricesWithConnectionShouldShow() {
+        when(validateInternet.isConnected()).thenReturn(true);
+        Viaje viaje = getViaje();
+
+        venderPasajesPresenter.validateInternetToGetDestinationsPrices(viaje);
+
+        verify(venderPasajesPresenter).createThreadToExecuteAnAction((Runnable) anyObject());
+        verify(venderPasajesPresenter).getDestinationPrices(viaje);
+        verify(venderPasajesView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
+    }
+
+    @Test
+    public void methodGetDestinationPricesShouldCallGetDestinationPricesInBL() throws RepositoryError {
+        Viaje viaje = getViaje();
+
+        venderPasajesPresenter.getDestinationPrices(viaje);
+
+        verify(viajeBL).getDestinationPrices(viaje);
+    }
+
+    @Test
+    public void methodGetDestinationPricesShouldCallLoadDestinationPrices() throws RepositoryError {
+        Viaje viaje = getViaje();
+        List<DestinationPrice> destinationPriceList = new ArrayList<>();
+        when(viajeRepository.getDestinationPrices(viaje)).thenReturn(destinationPriceList);
+
+        venderPasajesPresenter.getDestinationPrices(viaje);
+
+        verify(venderPasajesView).loadDestinationPricesOnUiThread(destinationPriceList);
+        verify(venderPasajesView).dismissProgressDialog();
+    }
+
+    @Test
+    public void methodGetDestinationPricesShouldShowAlertDalogIfAnErrorOcurred() throws RepositoryError {
+
+        RepositoryError repositoryError = new RepositoryError(IConstants.DEFAUL_ERROR);
+        repositoryError.setIdError(0);
+        Viaje viaje = getViaje();
+        when(viajeRepository.getDestinationPrices(viaje)).thenThrow(repositoryError);
+
+        venderPasajesPresenter.getDestinationPrices(viaje);
+
+        verify(venderPasajesView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+    }
+
     private Viaje getViaje() {
         Viaje viaje = new Viaje();
         viaje.setCodigoTipoBus("123");
         viaje.setCodigoRuta("123");
+        viaje.setCodigoTipoPasaje("123");
 
         return viaje;
     }

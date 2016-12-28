@@ -4,6 +4,8 @@ package com.app.viajarsoft.ventatiquetes.helpers;
 import android.support.annotation.Nullable;
 
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.DestinationPriceDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.RutaDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoBusDTO;
@@ -14,6 +16,7 @@ import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DTO.ErrorDTO;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
@@ -154,6 +157,7 @@ public class Mapper {
         ViajeDTO viajeDTO = new ViajeDTO();
         viajeDTO.setCodigoTipoBus(viaje.getCodigoTipoBus());
         viajeDTO.setCodigoRuta(viaje.getCodigoRuta());
+        viajeDTO.setCodigoTipoPasaje(viaje.getCodigoTipoPasaje());
         return viajeDTO;
     }
 
@@ -167,6 +171,24 @@ public class Mapper {
                     tipoTiquete.setDescripcion(tipoTiqueteDTO.getDescripcion());
                     tipoTiquete.setTipo(tipoTiqueteDTO.getTipo());
                     return tipoTiquete;
+                }
+            });
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static List<DestinationPrice> convertListDestinationPricesDTOToDomain(ListDestinationPricesDTO listDestinationPricesDTO) {
+        if (listDestinationPricesDTO != null && listDestinationPricesDTO.getPreciosDestino() != null) {
+            return Lists.transform(listDestinationPricesDTO.getPreciosDestino(), new Function<DestinationPriceDTO, DestinationPrice>() {
+                @Nullable
+                @Override
+                public DestinationPrice apply(DestinationPriceDTO destinationPriceDTO) {
+                    DestinationPrice destinationPrice = new DestinationPrice();
+                    destinationPrice.setDestino(destinationPriceDTO.getDestino());
+                    destinationPrice.setValorTiquete(destinationPriceDTO.getValorTiquete());
+                    destinationPrice.setValorSeguro(destinationPriceDTO.getValorSeguro());
+                    return destinationPrice;
                 }
             });
         } else {

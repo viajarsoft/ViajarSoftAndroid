@@ -1,6 +1,7 @@
 package com.app.viajarsoft.ventatiquetes.services;
 
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
 
@@ -20,4 +21,7 @@ public interface IViajeServices {
 
     @POST("/Factura/ObtenerTiposTiquete")
     ListTipoTiquetesDTO getTickets(@Body ViajeDTO viajeDTO);
+
+    @POST("/Factura/ObtenerPreciosDestino")
+    ListDestinationPricesDTO getDestinationPrices(@Body ViajeDTO viajeDTO);
 }

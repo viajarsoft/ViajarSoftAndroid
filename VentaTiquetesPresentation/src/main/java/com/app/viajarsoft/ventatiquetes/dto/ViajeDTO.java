@@ -8,6 +8,7 @@ public class ViajeDTO {
 
     private String CodigoTipoBus;
     private String CodigoRuta;
+    private String CodigoTipoPasaje;
 
     public String getCodigoTipoBus() {
         return CodigoTipoBus;
@@ -23,5 +24,13 @@ public class ViajeDTO {
 
     public void setCodigoRuta(String codigoRuta) {
         CodigoRuta = codigoRuta;
+    }
+
+    public String getCodigoTipoPasaje() {
+        return CodigoTipoPasaje;
+    }
+
+    public void setCodigoTipoPasaje(String codigoTipoPasaje) {
+        CodigoTipoPasaje = codigoTipoPasaje;
     }
 }

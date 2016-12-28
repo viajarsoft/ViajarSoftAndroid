@@ -1,6 +1,7 @@
 package com.app.viajarsoft.ventatiquetes.repositories.viaje;
 
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
@@ -20,6 +21,11 @@ public class ViajeRepositoryTest implements IViajeRepository {
 
     @Override
     public List<TipoTiquete> getTickets(Viaje viaje) throws RepositoryError {
+        return null;
+    }
+
+    @Override
+    public List<DestinationPrice> getDestinationPrices(Viaje viaje) throws RepositoryError {
         return null;
     }
 }

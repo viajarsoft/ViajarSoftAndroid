@@ -17,6 +17,7 @@ import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreference
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.IVenderPasajesView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
@@ -152,6 +153,20 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         });
     }
 
+    @Override
+    public void loadDestinationPricesOnUiThread(final List<DestinationPrice> destinationPriceList) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadDestinationPrices(destinationPriceList);
+            }
+        });
+    }
+
+    private void loadDestinationPrices(List<DestinationPrice> destinationPriceList) {
+        //TODO Implementar.
+    }
+
     private void loadTicketsSpinner(final List<TipoTiquete> tipoTiquetes) {
         List<String> stringList = getStringListFromTicketList(tipoTiquetes);
         stringList.add(0, IConstants.SELECT);
@@ -163,6 +178,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
                     tipoTiqueteSelected = IConstants.EMPTY_STRING;
                 } else {
                     tipoTiqueteSelected = tipoTiquetes.get(position - 1).getTipo();
+                    prepareDataToGetDestinationPrices(tipoBusSelected, codigoRutaSelected, tipoTiqueteSelected);
                 }
             }
 
@@ -170,6 +186,14 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+    }
+
+    private void prepareDataToGetDestinationPrices(String tipoBusSelected, String codigoRutaSelected, String tipoTiqueteSelected) {
+        Viaje viaje = new Viaje();
+        viaje.setCodigoTipoPasaje(tipoTiqueteSelected);
+        viaje.setCodigoRuta(codigoRutaSelected);
+        viaje.setCodigoTipoBus(tipoBusSelected);
+        getPresenter().validateInternetToGetDestinationsPrices(viaje);
     }
 
     private List<String> getStringListFromTicketList(List<TipoTiquete> tipoTiquetes) {
