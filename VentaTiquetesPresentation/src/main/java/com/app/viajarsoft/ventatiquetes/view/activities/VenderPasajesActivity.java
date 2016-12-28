@@ -42,8 +42,14 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         this.usuarioResponse = (UsuarioResponse) getIntent().getSerializableExtra(IConstants.USUARIO);
         this.bussesAndRoutes = (BussesAndRoutes) getIntent().getSerializableExtra(IConstants.BUSSES_AND_ROUTES);
         loadToolbar();
+        loadViews();
         loadBussesSpinner();
         loadRoutesSpinner();
+    }
+
+    private void loadViews() {
+        venderPasajes_spinnerTipoBus = (Spinner) findViewById(R.id.venderPasajes_spinnerTipoBus);
+        venderPasajes_spinnerRutas = (Spinner) findViewById(R.id.venderPasajes_spinnerRutas);
     }
 
     private void loadRoutesSpinner() {
@@ -94,23 +100,19 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
     }
 
     private List<String> getStringListFromRoutesList(ArrayList<Ruta> rutas) {
-        return Lists.transform(rutas, new Function<Ruta, String>() {
-            @Nullable
-            @Override
-            public String apply(Ruta ruta) {
-                return ruta.getDescripcion();
-            }
-        });
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < rutas.size(); i++) {
+            stringList.add(rutas.get(i).getDescripcion());
+        }
+        return stringList;
     }
 
     private List<String> getStringListFromBussesList(ArrayList<TipoBus> tiposBuses) {
-        return Lists.transform(tiposBuses, new Function<TipoBus, String>() {
-            @Nullable
-            @Override
-            public String apply(TipoBus tipoBus) {
-                return tipoBus.getDescripcion();
-            }
-        });
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < tiposBuses.size(); i++) {
+            stringList.add(tiposBuses.get(i).getDescripcion());
+        }
+        return stringList;
     }
 
     private void loadToolbar() {
