@@ -2,6 +2,7 @@ package com.app.viajarsoft.ventatiquetes.viaje;
 
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.IViajeRepository;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.ViajeBL;
 
@@ -54,5 +55,86 @@ public class ViajeBLTest {
     public void getBussesAndRoutesWithCorrectParameterShouldCallGetBussesAndRoutesInRepository() throws RepositoryError {
         viajeBL.getBussesAndRoutes("123");
         verify(viajeRepository).getBussesAndRoutes("123");
+    }
+
+    @Test
+    public void getTicketsWithViajeNullShouldReturnAnException() throws RepositoryError {
+
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.NULL_PARAMETERS);
+
+        viajeBL.getTickets(null);
+
+    }
+
+    @Test
+    public void getTicketsWithCodigoRutaeNullShouldReturnAnException() throws RepositoryError {
+
+        Viaje viaje = getViaje();
+        viaje.setCodigoRuta(null);
+
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.NULL_PARAMETERS);
+
+        viajeBL.getTickets(viaje);
+
+    }
+
+    @Test
+    public void getTicketsWithCodigoBusNullShouldReturnAnException() throws RepositoryError {
+
+        Viaje viaje = getViaje();
+        viaje.setCodigoTipoBus(null);
+
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.NULL_PARAMETERS);
+
+        viajeBL.getTickets(viaje);
+
+    }
+
+    @Test
+    public void getTicketsWithCodigoRutaEmptyShouldReturnAnException() throws RepositoryError {
+
+        Viaje viaje = getViaje();
+        viaje.setCodigoRuta("");
+
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.EMPTY_PARAMETERS);
+
+        viajeBL.getTickets(viaje);
+
+    }
+
+    @Test
+    public void getTicketsWithCodigoBusEmptyShouldReturnAnException() throws RepositoryError {
+
+        Viaje viaje = getViaje();
+        viaje.setCodigoTipoBus("");
+
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.EMPTY_PARAMETERS);
+
+        viajeBL.getTickets(viaje);
+
+    }
+
+    @Test
+    public void getTicketsWithCorrectParametersShouldCallGetTicketsInRepository() throws RepositoryError {
+
+        Viaje viaje = getViaje();
+
+        viajeBL.getTickets(viaje);
+
+        verify(viajeRepository).getTickets(viaje);
+
+    }
+
+    private Viaje getViaje() {
+        Viaje viaje = new Viaje();
+        viaje.setCodigoTipoBus("123");
+        viaje.setCodigoRuta("123");
+
+        return viaje;
     }
 }

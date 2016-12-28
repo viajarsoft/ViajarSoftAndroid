@@ -10,7 +10,7 @@ public interface IBaseView {
 
     void showAlertDialogGeneralInformationOnUiThread(int title, String message);
 
-    void showProgressDIalog(int text);
+    void showProgressDialog(int text);
 
     void dismissProgressDialog();
 }

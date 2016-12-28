@@ -38,7 +38,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     public void createThreadToLogin(final UsuarioRequest usuarioRequest) {
-        getView().showProgressDIalog(R.string.text_please_wait);
+        getView().showProgressDialog(R.string.text_please_wait);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

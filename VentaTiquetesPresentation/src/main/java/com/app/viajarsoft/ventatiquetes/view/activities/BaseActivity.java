@@ -53,7 +53,7 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     }
 
     @Override
-    public void showProgressDIalog(int text) {
+    public void showProgressDialog(int text) {
         this.progressDialog.setMessage(getResources().getString(text));
         this.progressDialog.show();
     }
