@@ -21,4 +21,118 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/borde_liquidacion"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_margin="10dp">
+
+         <TextView
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:layout_weight="0.5"
+             android:gravity="center_vertical|end"
+             android:text="@string/title_usuario"
+             android:textStyle="bold"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:textColor="@color/colorPrimaryDark"
+             android:layout_marginRight="10dp"
+             android:id="@+id/textView" />
+
+         <TextView
+             android:id="@+id/liquidar_tvUsuario"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.5"
+             android:text="Leidy Zuluaga"
+             android:gravity="center_vertical|start"
+             android:layout_marginLeft="0dp"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:textColor="@color/colorBlack" />
+     </LinearLayout>
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_weight="0.5"
+         android:layout_margin="10dp">
+
+
+         <TextView
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:layout_weight="0.5"
+             android:gravity="center_vertical|end"
+             android:text="@string/title_pasaje_vendido"
+             android:textStyle="bold"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:textColor="@color/colorPrimaryDark"
+             android:layout_marginRight="10dp" />
+
+         <TextView
+             android:id="@+id/liquidar_tvPasajesVendidos"
+             android:layout_width="0dp"
+             android:layout_height="match_parent"
+             android:layout_weight="0.5"
+             android:text="25"
+             android:gravity="bottom|start"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:textColor="@color/colorBlack" />
+     </LinearLayout>
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_weight="0.5"
+         android:layout_margin="10dp">
+
+
+         <TextView
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:layout_weight="0.5"
+             android:gravity="center_vertical|end"
+             android:text="@string/title_valor_total"
+             android:textStyle="bold"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:textColor="@color/colorPrimaryDark"
+             android:layout_marginRight="10dp" />
+
+         <TextView
+             android:id="@+id/liquidar_tvValorTotal"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.5"
+             android:text="$ 58.000"
+             android:gravity="center_vertical|start"
+             android:textAppearance="?android:attr/textAppearanceMedium"
+             android:textColor="@color/colorBlack" />
+     </LinearLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/liquidar_btnLiquidar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Aceptar"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        android:theme="@style/RaisedButtonDark"
+        android:layout_marginTop="20dp" />
+
 </LinearLayout>

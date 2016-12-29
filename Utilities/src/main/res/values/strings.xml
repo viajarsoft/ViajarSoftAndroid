@@ -21,4 +21,9 @@
     <string name="text_tipo_bus">Tipo de bus</string>
     <string name="text_rutas">Rutas</string>
     <string name="text_tipos_tiquetes">Tipos de tiquetes</string>
+
+
+    <string name="title_usuario">Usuario:</string>
+    <string name="title_pasaje_vendido">Pasajes vendidos:</string>
+    <string name="title_valor_total">Valor total:</string>
 </resources>
