@@ -4,18 +4,26 @@ package com.app.viajarsoft.ventatiquetes.helpers;
 import android.support.annotation.Nullable;
 
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.DestinationPriceDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.RutaDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoBusDTO;
+import com.app.viajarsoft.ventatiquetes.dto.TipoTiqueteDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioRequestDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioResponseDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DTO.ErrorDTO;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -130,16 +138,59 @@ public class Mapper {
 
     private static ArrayList<Ruta> convertListRutasDTOToDomain(List<RutaDTO> rutaDTOs) {
         if (rutaDTOs != null) {
-             return new ArrayList<>(Lists.transform(rutaDTOs, new Function<RutaDTO, Ruta>() {
-                 @Nullable
-                 @Override
-                 public Ruta apply(RutaDTO rutaDTO) {
-                     Ruta ruta = new Ruta();
-                     ruta.setCodigo(rutaDTO.getCodigo());
-                     ruta.setDescripcion(rutaDTO.getDescripcion());
-                     return ruta;
-                 }
-             }));
+            return new ArrayList<>(Lists.transform(rutaDTOs, new Function<RutaDTO, Ruta>() {
+                @Nullable
+                @Override
+                public Ruta apply(RutaDTO rutaDTO) {
+                    Ruta ruta = new Ruta();
+                    ruta.setCodigo(rutaDTO.getCodigo());
+                    ruta.setDescripcion(rutaDTO.getDescripcion());
+                    return ruta;
+                }
+            }));
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static ViajeDTO convertViajeDomainToDTO(Viaje viaje) {
+        ViajeDTO viajeDTO = new ViajeDTO();
+        viajeDTO.setCodigoTipoBus(viaje.getCodigoTipoBus());
+        viajeDTO.setCodigoRuta(viaje.getCodigoRuta());
+        viajeDTO.setCodigoTipoPasaje(viaje.getCodigoTipoPasaje());
+        return viajeDTO;
+    }
+
+    public static List<TipoTiquete> convertListTipoTiquetesDTOToDomain(ListTipoTiquetesDTO listTipoTiquetesDTO) {
+        if (listTipoTiquetesDTO != null && listTipoTiquetesDTO.getTiposTiquete() != null) {
+            return Lists.transform(listTipoTiquetesDTO.getTiposTiquete(), new Function<TipoTiqueteDTO, TipoTiquete>() {
+                @Nullable
+                @Override
+                public TipoTiquete apply(TipoTiqueteDTO tipoTiqueteDTO) {
+                    TipoTiquete tipoTiquete = new TipoTiquete();
+                    tipoTiquete.setDescripcion(tipoTiqueteDTO.getDescripcion());
+                    tipoTiquete.setTipo(tipoTiqueteDTO.getTipo());
+                    return tipoTiquete;
+                }
+            });
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static List<DestinationPrice> convertListDestinationPricesDTOToDomain(ListDestinationPricesDTO listDestinationPricesDTO) {
+        if (listDestinationPricesDTO != null && listDestinationPricesDTO.getPreciosDestino() != null) {
+            return Lists.transform(listDestinationPricesDTO.getPreciosDestino(), new Function<DestinationPriceDTO, DestinationPrice>() {
+                @Nullable
+                @Override
+                public DestinationPrice apply(DestinationPriceDTO destinationPriceDTO) {
+                    DestinationPrice destinationPrice = new DestinationPrice();
+                    destinationPrice.setDestino(destinationPriceDTO.getDestino());
+                    destinationPrice.setValorTiquete(destinationPriceDTO.getValorTiquete());
+                    destinationPrice.setValorSeguro(destinationPriceDTO.getValorSeguro());
+                    return destinationPrice;
+                }
+            });
         } else {
             return new ArrayList<>();
         }

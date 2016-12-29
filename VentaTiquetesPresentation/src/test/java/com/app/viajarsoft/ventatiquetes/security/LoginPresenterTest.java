@@ -112,7 +112,7 @@ public class LoginPresenterTest {
     @Test
     public void methodCreateThreadToLoginShouldShowProgressDialog() {
         loginPresenter.createThreadToLogin(getUsuarioResponseInstance());
-        verify(loginView).showProgressDIalog(R.string.text_please_wait);
+        verify(loginView).showProgressDialog(R.string.text_please_wait);
     }
 
     @Test

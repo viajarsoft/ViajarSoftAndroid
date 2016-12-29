@@ -11,13 +11,18 @@ import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.app.viajarsoft.ventatiquetes.R;
+import com.app.viajarsoft.ventatiquetes.dependency_injection.DomainModule;
 import com.app.viajarsoft.ventatiquetes.presenters.VenderPasajesPresenter;
+import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.IVenderPasajesView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
@@ -28,22 +33,34 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
 
     private Spinner venderPasajes_spinnerTipoBus;
     private Spinner venderPasajes_spinnerRutas;
+    private Spinner venderPasajes_spinnerTiposTiquetes;
 
     private UsuarioResponse usuarioResponse;
     private BussesAndRoutes bussesAndRoutes;
 
-    private String tipoBusSelected;
-    private String codigoRutaSelected;
+    private String tipoBusSelected = IConstants.EMPTY_STRING;
+    private String codigoRutaSelected = IConstants.EMPTY_STRING;
+    private String tipoTiqueteSelected = IConstants.EMPTY_STRING;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vender_pasajes);
+        setPresenter(new VenderPasajesPresenter(DomainModule.getViajeBLInstance(new CustomSharedPreferences(this))));
+        getPresenter().inject(this, getValidateInternet());
+        createProgressDialog();
         this.usuarioResponse = (UsuarioResponse) getIntent().getSerializableExtra(IConstants.USUARIO);
         this.bussesAndRoutes = (BussesAndRoutes) getIntent().getSerializableExtra(IConstants.BUSSES_AND_ROUTES);
         loadToolbar();
+        loadViews();
         loadBussesSpinner();
         loadRoutesSpinner();
+    }
+
+    private void loadViews() {
+        venderPasajes_spinnerTipoBus = (Spinner) findViewById(R.id.venderPasajes_spinnerTipoBus);
+        venderPasajes_spinnerRutas = (Spinner) findViewById(R.id.venderPasajes_spinnerRutas);
+        venderPasajes_spinnerTiposTiquetes = (Spinner) findViewById(R.id.venderPasajes_spinnerTiposTiquetes);
     }
 
     private void loadRoutesSpinner() {
@@ -53,10 +70,12 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         venderPasajes_spinnerRutas.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                venderPasajes_spinnerTiposTiquetes.setAdapter(null);
                 if (position == 0) {
                     codigoRutaSelected = IConstants.EMPTY_STRING;
                 } else {
                     codigoRutaSelected = bussesAndRoutes.getRutas().get(position - 1).getCodigo();
+                    prepareDataToGetTickets(tipoBusSelected, codigoRutaSelected);
                 }
             }
 
@@ -73,10 +92,12 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         venderPasajes_spinnerTipoBus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                venderPasajes_spinnerTiposTiquetes.setAdapter(null);
                 if (position == 0) {
                     tipoBusSelected = IConstants.EMPTY_STRING;
                 } else {
                     tipoBusSelected = bussesAndRoutes.getTiposBuses().get(position - 1).getTipo();
+                    prepareDataToGetTickets(tipoBusSelected, codigoRutaSelected);
                 }
             }
 
@@ -94,23 +115,19 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
     }
 
     private List<String> getStringListFromRoutesList(ArrayList<Ruta> rutas) {
-        return Lists.transform(rutas, new Function<Ruta, String>() {
-            @Nullable
-            @Override
-            public String apply(Ruta ruta) {
-                return ruta.getDescripcion();
-            }
-        });
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < rutas.size(); i++) {
+            stringList.add(rutas.get(i).getDescripcion());
+        }
+        return stringList;
     }
 
     private List<String> getStringListFromBussesList(ArrayList<TipoBus> tiposBuses) {
-        return Lists.transform(tiposBuses, new Function<TipoBus, String>() {
-            @Nullable
-            @Override
-            public String apply(TipoBus tipoBus) {
-                return tipoBus.getDescripcion();
-            }
-        });
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < tiposBuses.size(); i++) {
+            stringList.add(tiposBuses.get(i).getDescripcion());
+        }
+        return stringList;
     }
 
     private void loadToolbar() {
@@ -127,7 +144,72 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
     }
 
     @Override
-    public void startVenderPasajesActivity(BussesAndRoutes bussesAndRoutes) {
+    public void loadTicketsSpinnerOnUiThread(final List<TipoTiquete> tipoTiquetes) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadTicketsSpinner(tipoTiquetes);
+            }
+        });
+    }
 
+    @Override
+    public void loadDestinationPricesOnUiThread(final List<DestinationPrice> destinationPriceList) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadDestinationPrices(destinationPriceList);
+            }
+        });
+    }
+
+    private void loadDestinationPrices(List<DestinationPrice> destinationPriceList) {
+        //TODO Implementar.
+    }
+
+    private void loadTicketsSpinner(final List<TipoTiquete> tipoTiquetes) {
+        List<String> stringList = getStringListFromTicketList(tipoTiquetes);
+        stringList.add(0, IConstants.SELECT);
+        venderPasajes_spinnerTiposTiquetes.setAdapter(getArrayAdapter(stringList));
+        venderPasajes_spinnerTiposTiquetes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    tipoTiqueteSelected = IConstants.EMPTY_STRING;
+                } else {
+                    tipoTiqueteSelected = tipoTiquetes.get(position - 1).getTipo();
+                    prepareDataToGetDestinationPrices(tipoBusSelected, codigoRutaSelected, tipoTiqueteSelected);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+    }
+
+    private void prepareDataToGetDestinationPrices(String tipoBusSelected, String codigoRutaSelected, String tipoTiqueteSelected) {
+        Viaje viaje = new Viaje();
+        viaje.setCodigoTipoPasaje(tipoTiqueteSelected);
+        viaje.setCodigoRuta(codigoRutaSelected);
+        viaje.setCodigoTipoBus(tipoBusSelected);
+        getPresenter().validateInternetToGetDestinationsPrices(viaje);
+    }
+
+    private List<String> getStringListFromTicketList(List<TipoTiquete> tipoTiquetes) {
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < tipoTiquetes.size(); i++) {
+            stringList.add(tipoTiquetes.get(i).getDescripcion());
+        }
+        return stringList;
+    }
+
+    private void prepareDataToGetTickets(String tipoBusSelected, String codigoRutaSelected) {
+
+        Viaje viaje = new Viaje();
+        viaje.setCodigoTipoBus(tipoBusSelected);
+        viaje.setCodigoRuta(codigoRutaSelected);
+
+        getPresenter().validateFieldsToGetTickets(viaje);
     }
 }

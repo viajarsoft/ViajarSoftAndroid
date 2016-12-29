@@ -26,7 +26,7 @@ public class LandingPresenter extends BasePresenter<ILandingView> {
     }
 
     public void createThreadToGetBussesAndRoutes(final String codigoOficina) {
-        getView().showProgressDIalog(R.string.text_please_wait);
+        getView().showProgressDialog(R.string.text_please_wait);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
