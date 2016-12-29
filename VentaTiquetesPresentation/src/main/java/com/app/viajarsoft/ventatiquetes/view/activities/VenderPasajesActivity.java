@@ -1,6 +1,7 @@
 package com.app.viajarsoft.ventatiquetes.view.activities;
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,8 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
+import com.zebra.sdk.comm.BluetoothConnectionInsecure;
+import com.zebra.sdk.comm.Connection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -183,18 +186,44 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
 
     @Override
     public void printTicketOnUiThread(final Tiquete tiquete) {
+
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                printTicket(tiquete);
+                
+                String zplTiquete = tiquete.getZplTiquete().toString();
+                try {
+                    String bt_printer = "ac:3f:a4:47:ba:9b";
+                    // Instantiate insecure connection for given Bluetooth&reg; MAC Address.
+                    Connection thePrinterConn = new BluetoothConnectionInsecure(bt_printer);
+
+                    // Initialize
+                    if (Looper.myLooper() == null) {
+                        Looper.prepare();
+                    }
+
+                    // Open the connection - physical connection is established here.
+                    thePrinterConn.open();
+
+                    // Send the data to printer as a byte array.
+                    thePrinterConn.write(zplTiquete.getBytes());
+
+                    // Make sure the data got to the printer before closing the connection
+                    Thread.sleep(500);
+
+                    // Close the insecure connection to release resources.
+                    thePrinterConn.close();
+
+                    Looper.myLooper().quit();
+                } catch (Exception e) {
+                    // Handle communications error here.
+                    e.printStackTrace();
+                }
             }
         });
     }
 
-    private void printTicket(Tiquete tiquete) {
-        //TODO Imprimir el tiquete.
-        Toast.makeText(this, "Imprimir tiquete", Toast.LENGTH_SHORT).show();
-    }
 
     private void loadDestinationPrices(List<DestinationPrice> destinationPriceList) {
         PrecioDestinoRecyclerViewAdapter precioDestinoRecyclerViewAdapter = new PrecioDestinoRecyclerViewAdapter(VenderPasajesActivity.this, destinationPriceList, VenderPasajesActivity.this);
