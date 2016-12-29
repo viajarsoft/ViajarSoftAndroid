@@ -144,7 +144,7 @@ public class ViajeBLTest {
     public void getDestinationPricesWithTipoPasajeNullShouldReturnAnException() throws RepositoryError {
 
         Viaje viaje = getViaje();
-        viaje.setCodigoTipoPasaje(null);
+        viaje.setTipoTiquete(null);
 
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(IConstants.NULL_PARAMETERS);
@@ -157,7 +157,7 @@ public class ViajeBLTest {
     public void getDestinationPricesWithTipoPasajeEmptyShouldReturnAnException() throws RepositoryError {
 
         Viaje viaje = getViaje();
-        viaje.setCodigoTipoPasaje("");
+        viaje.setTipoTiquete("");
 
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(IConstants.EMPTY_PARAMETERS);
@@ -175,11 +175,24 @@ public class ViajeBLTest {
         verify(viajeRepository).getDestinationPrices(viaje);
     }
 
+    @Test
+    public void sellTicketShouldCallSellTicketInRepository() throws RepositoryError {
+        Viaje viaje = getViaje();
+
+        viajeBL.sellTicket(viaje);
+
+        verify(viajeRepository).sellTicket(viaje);
+    }
+
     private Viaje getViaje() {
         Viaje viaje = new Viaje();
         viaje.setCodigoTipoBus("123");
         viaje.setCodigoRuta("123");
-        viaje.setCodigoTipoPasaje("123");
+        viaje.setTipoTiquete("123");
+        viaje.setCodigoOficina("123");
+        viaje.setCodigoTaquilla("123");
+        viaje.setValorTiquete(1000);
+        viaje.setValorSeguro(200);
 
         return viaje;
     }

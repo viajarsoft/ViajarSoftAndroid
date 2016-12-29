@@ -5,6 +5,7 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 
 import java.util.List;
@@ -41,9 +42,15 @@ public class ViajeBL {
     public List<DestinationPrice> getDestinationPrices(Viaje viaje) throws RepositoryError {
 
         Validations.validateNullParameter(viaje);
-        Validations.validateNullParameter(viaje.getCodigoTipoPasaje());
-        Validations.validateEmptyParameter(viaje.getCodigoTipoPasaje());
+        Validations.validateNullParameter(viaje.getTipoTiquete());
+        Validations.validateEmptyParameter(viaje.getTipoTiquete());
 
         return viajeRepository.getDestinationPrices(viaje);
     }
+
+    public Tiquete sellTicket(Viaje viaje) throws RepositoryError {
+        return viajeRepository.sellTicket(viaje);
+    }
+
+
 }

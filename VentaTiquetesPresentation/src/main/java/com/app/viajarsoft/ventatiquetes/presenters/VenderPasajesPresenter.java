@@ -75,4 +75,27 @@ public class VenderPasajesPresenter extends BasePresenter<IVenderPasajesView> {
         Thread thread = new Thread(runnable);
         thread.start();
     }
+
+    public void validateInternetToSellTicket(final Viaje viaje) {
+        if (getValidateInternet().isConnected()) {
+            createThreadToExecuteAnAction(new Runnable() {
+                @Override
+                public void run() {
+                    sellTicket(viaje);
+                }
+            });
+        } else {
+            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
+        }
+    }
+
+    public void sellTicket(Viaje viaje) {
+        try {
+            getView().printTicketOnUiThread(viajeBL.sellTicket(viaje));
+        } catch (RepositoryError repositoryError) {
+            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+        } finally {
+            getView().dismissProgressDialog();
+        }
+    }
 }

@@ -7,8 +7,8 @@ package com.app.viajarsoft.ventatiquetes.dto;
 public class DestinationPriceDTO {
 
     private String Destino;
-    private int ValorTiquete;
-    private int ValorSeguro;
+    private double ValorTiquete;
+    private double ValorSeguro;
 
     public String getDestino() {
         return Destino;
@@ -18,19 +18,19 @@ public class DestinationPriceDTO {
         Destino = destino;
     }
 
-    public int getValorTiquete() {
+    public double getValorTiquete() {
         return ValorTiquete;
     }
 
-    public void setValorTiquete(int valorTiquete) {
+    public void setValorTiquete(double valorTiquete) {
         ValorTiquete = valorTiquete;
     }
 
-    public int getValorSeguro() {
+    public double getValorSeguro() {
         return ValorSeguro;
     }
 
-    public void setValorSeguro(int valorSeguro) {
+    public void setValorSeguro(double valorSeguro) {
         ValorSeguro = valorSeguro;
     }
 }

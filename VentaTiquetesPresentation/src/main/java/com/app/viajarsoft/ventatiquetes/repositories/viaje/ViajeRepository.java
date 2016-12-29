@@ -3,6 +3,7 @@ package com.app.viajarsoft.ventatiquetes.repositories.viaje;
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.TiqueteDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
 import com.app.viajarsoft.ventatiquetes.helpers.Mapper;
 import com.app.viajarsoft.ventatiquetes.services.IViajeServices;
@@ -12,6 +13,7 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.IViajeRepository;
 
@@ -59,6 +61,17 @@ public class ViajeRepository implements IViajeRepository {
             ViajeDTO viajeDTO = Mapper.convertViajeDomainToDTO(viaje);
             ListDestinationPricesDTO listDestinationPricesDTO = viajeServices.getDestinationPrices(viajeDTO);
             return Mapper.convertListDestinationPricesDTOToDomain(listDestinationPricesDTO);
+        } catch (RetrofitError retrofitError) {
+            throw Mapper.convertRetrofitErrorToRepositoryError(retrofitError);
+        }
+    }
+
+    @Override
+    public Tiquete sellTicket(Viaje viaje) throws RepositoryError {
+        try {
+            ViajeDTO viajeDTO = Mapper.convertViajeDomainToDTO(viaje);
+            TiqueteDTO tiqueteDTO = viajeServices.sellTicket(viajeDTO);
+            return Mapper.convertTiqueteDTOToDomain(tiqueteDTO);
         } catch (RetrofitError retrofitError) {
             throw Mapper.convertRetrofitErrorToRepositoryError(retrofitError);
         }

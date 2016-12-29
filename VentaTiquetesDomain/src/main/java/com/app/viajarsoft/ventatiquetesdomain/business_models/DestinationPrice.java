@@ -7,8 +7,8 @@ package com.app.viajarsoft.ventatiquetesdomain.business_models;
 public class DestinationPrice {
 
     private String destino;
-    private int valorTiquete;
-    private int valorSeguro;
+    private double valorTiquete;
+    private double valorSeguro;
 
     public String getDestino() {
         return destino;
@@ -18,19 +18,19 @@ public class DestinationPrice {
         this.destino = destino;
     }
 
-    public int getValorTiquete() {
+    public double getValorTiquete() {
         return valorTiquete;
     }
 
-    public void setValorTiquete(int valorTiquete) {
+    public void setValorTiquete(double valorTiquete) {
         this.valorTiquete = valorTiquete;
     }
 
-    public int getValorSeguro() {
+    public double getValorSeguro() {
         return valorSeguro;
     }
 
-    public void setValorSeguro(int valorSeguro) {
+    public void setValorSeguro(double valorSeguro) {
         this.valorSeguro = valorSeguro;
     }
 }
