@@ -3,6 +3,8 @@ package com.app.viajarsoft.ventatiquetes.presenters;
 import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILandingView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.ViajeBL;
 
 /**
@@ -44,5 +46,30 @@ public class LandingPresenter extends BasePresenter<ILandingView> {
         } finally {
             getView().dismissProgressDialog();
         }
+    }
+
+    public void validateInternetToGetSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) {
+        if(getValidateInternet().isConnected()){
+            createThreadToGetSummaryLiquidation(resumenLiquidacion);
+        }else{
+            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
+        }
+
+    }
+
+    public void createThreadToGetSummaryLiquidation(final ResumenLiquidacion resumenLiquidacion) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    VentaPorLiquidar ventaPorLiquidar = viajeBL.getSummaryLiquidation(resumenLiquidacion);
+                } catch (RepositoryError repositoryError) {
+                    getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+                }finally {
+                    getView().dismissProgressDialog();
+                }
+            }
+        });
+        thread.start();
     }
 }

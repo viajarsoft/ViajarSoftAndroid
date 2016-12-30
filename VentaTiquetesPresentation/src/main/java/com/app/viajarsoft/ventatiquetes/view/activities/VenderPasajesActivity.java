@@ -1,13 +1,14 @@
 package com.app.viajarsoft.ventatiquetes.view.activities;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.os.Looper;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import com.app.viajarsoft.ventatiquetes.R;
@@ -15,16 +16,18 @@ import com.app.viajarsoft.ventatiquetes.dependency_injection.DomainModule;
 import com.app.viajarsoft.ventatiquetes.presenters.VenderPasajesPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
+import com.app.viajarsoft.ventatiquetes.view.adapters.PrecioDestinoRecyclerViewAdapter;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.IVenderPasajesView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import com.zebra.sdk.comm.BluetoothConnectionInsecure;
+import com.zebra.sdk.comm.Connection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +37,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
     private Spinner venderPasajes_spinnerTipoBus;
     private Spinner venderPasajes_spinnerRutas;
     private Spinner venderPasajes_spinnerTiposTiquetes;
+    private RecyclerView venderPasajes_recyclerPreciosDestino;
 
     private UsuarioResponse usuarioResponse;
     private BussesAndRoutes bussesAndRoutes;
@@ -61,6 +65,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         venderPasajes_spinnerTipoBus = (Spinner) findViewById(R.id.venderPasajes_spinnerTipoBus);
         venderPasajes_spinnerRutas = (Spinner) findViewById(R.id.venderPasajes_spinnerRutas);
         venderPasajes_spinnerTiposTiquetes = (Spinner) findViewById(R.id.venderPasajes_spinnerTiposTiquetes);
+        venderPasajes_recyclerPreciosDestino = (RecyclerView) findViewById(R.id.venderPasajes_recyclerPreciosDestino);
     }
 
     private void loadRoutesSpinner() {
@@ -71,6 +76,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 venderPasajes_spinnerTiposTiquetes.setAdapter(null);
+                venderPasajes_recyclerPreciosDestino.setAdapter(null);
                 if (position == 0) {
                     codigoRutaSelected = IConstants.EMPTY_STRING;
                 } else {
@@ -93,6 +99,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 venderPasajes_spinnerTiposTiquetes.setAdapter(null);
+                venderPasajes_recyclerPreciosDestino.setAdapter(null);
                 if (position == 0) {
                     tipoBusSelected = IConstants.EMPTY_STRING;
                 } else {
@@ -163,8 +170,66 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         });
     }
 
+    @Override
+    public void prepareDataToSellTicket(DestinationPrice destinationPrice) {
+        Viaje viaje = new Viaje();
+        viaje.setCodigoTipoBus(tipoBusSelected);
+        viaje.setCodigoRuta(codigoRutaSelected);
+        viaje.setTipoTiquete(tipoTiqueteSelected);
+        viaje.setCodigoOficina(usuarioResponse.getCodigoOficina());
+        viaje.setCodigoTaquilla(usuarioResponse.getCodigoTaquilla());
+        viaje.setValorTiquete(destinationPrice.getValorTiquete());
+        viaje.setValorSeguro(destinationPrice.getValorSeguro());
+
+        getPresenter().validateInternetToSellTicket(viaje);
+    }
+
+    @Override
+    public void printTicketOnUiThread(final Tiquete tiquete) {
+
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                
+                String zplTiquete = tiquete.getZplTiquete().toString();
+                try {
+                    String bt_printer = "ac:3f:a4:47:ba:9b";
+                    // Instantiate insecure connection for given Bluetooth&reg; MAC Address.
+                    Connection thePrinterConn = new BluetoothConnectionInsecure(bt_printer);
+
+                    // Initialize
+                    if (Looper.myLooper() == null) {
+                        Looper.prepare();
+                    }
+
+                    // Open the connection - physical connection is established here.
+                    thePrinterConn.open();
+
+                    // Send the data to printer as a byte array.
+                    thePrinterConn.write(zplTiquete.getBytes());
+
+                    // Make sure the data got to the printer before closing the connection
+                    Thread.sleep(500);
+
+                    // Close the insecure connection to release resources.
+                    thePrinterConn.close();
+
+                    Looper.myLooper().quit();
+                } catch (Exception e) {
+                    // Handle communications error here.
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
     private void loadDestinationPrices(List<DestinationPrice> destinationPriceList) {
-        //TODO Implementar.
+        PrecioDestinoRecyclerViewAdapter precioDestinoRecyclerViewAdapter = new PrecioDestinoRecyclerViewAdapter(VenderPasajesActivity.this, destinationPriceList, VenderPasajesActivity.this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(VenderPasajesActivity.this);
+        venderPasajes_recyclerPreciosDestino.setLayoutManager(linearLayoutManager);
+        venderPasajes_recyclerPreciosDestino.setAdapter(precioDestinoRecyclerViewAdapter);
     }
 
     private void loadTicketsSpinner(final List<TipoTiquete> tipoTiquetes) {
@@ -174,6 +239,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         venderPasajes_spinnerTiposTiquetes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                venderPasajes_recyclerPreciosDestino.setAdapter(null);
                 if (position == 0) {
                     tipoTiqueteSelected = IConstants.EMPTY_STRING;
                 } else {
@@ -190,7 +256,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
 
     private void prepareDataToGetDestinationPrices(String tipoBusSelected, String codigoRutaSelected, String tipoTiqueteSelected) {
         Viaje viaje = new Viaje();
-        viaje.setCodigoTipoPasaje(tipoTiqueteSelected);
+        viaje.setTipoTiquete(tipoTiqueteSelected);
         viaje.setCodigoRuta(codigoRutaSelected);
         viaje.setCodigoTipoBus(tipoBusSelected);
         getPresenter().validateInternetToGetDestinationsPrices(viaje);

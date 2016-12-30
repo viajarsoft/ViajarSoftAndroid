@@ -8,6 +8,8 @@ import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILandingView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.IViajeRepository;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.ViajeBL;
 
@@ -103,5 +105,41 @@ public class LandingPresenterTest {
         verify(landingView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
         verify(landingView).dismissProgressDialog();
 
+    }
+
+    @Test
+    public void methodValidateInternetSummaryWithoutConnectionShouldShowAlertDialog() {
+        ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+        resumenLiquidacion.setCodigoTaquilla("1213");
+        resumenLiquidacion.setCodigoOficina("34356");
+        when(validateInternet.isConnected()).thenReturn(false);
+
+        landingPresenter.validateInternetToGetSummaryLiquidation(resumenLiquidacion);
+
+        verify(landingView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
+        verify(landingPresenter, never()).createThreadToGetSummaryLiquidation(resumenLiquidacion);
+    }
+
+    @Test
+    public void methodValidateInternetSummaryWithConnectionShouldCallCreateThreadTGetSummaryLiquidation(){
+        ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+        resumenLiquidacion.setCodigoTaquilla("1213");
+        resumenLiquidacion.setCodigoOficina("34356");
+        when(validateInternet.isConnected()).thenReturn(true);
+
+        landingPresenter.validateInternetToGetSummaryLiquidation(resumenLiquidacion);
+
+        verify(landingPresenter).createThreadToGetSummaryLiquidation(resumenLiquidacion);
+        verify(landingView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
+    }
+
+    @Test
+    public void methodcreateThreadToGetSummaryLiquidationShouldCallGetSummaryLiquidationInBL() throws RepositoryError {
+        ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+        resumenLiquidacion.setCodigoTaquilla("1213");
+        resumenLiquidacion.setCodigoOficina("34356");
+        landingPresenter.createThreadToGetSummaryLiquidation(resumenLiquidacion);
+
+        verify(viajeBL).getSummaryLiquidation(resumenLiquidacion);
     }
 }

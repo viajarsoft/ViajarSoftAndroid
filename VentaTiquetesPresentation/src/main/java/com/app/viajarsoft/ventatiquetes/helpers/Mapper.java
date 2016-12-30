@@ -10,6 +10,7 @@ import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.RutaDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoBusDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoTiqueteDTO;
+import com.app.viajarsoft.ventatiquetes.dto.TiqueteDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioRequestDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioResponseDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
@@ -21,6 +22,7 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
@@ -157,7 +159,11 @@ public class Mapper {
         ViajeDTO viajeDTO = new ViajeDTO();
         viajeDTO.setCodigoTipoBus(viaje.getCodigoTipoBus());
         viajeDTO.setCodigoRuta(viaje.getCodigoRuta());
-        viajeDTO.setCodigoTipoPasaje(viaje.getCodigoTipoPasaje());
+        viajeDTO.setTipoTiquete(viaje.getTipoTiquete());
+        viajeDTO.setCodigoOficina(viaje.getCodigoOficina());
+        viajeDTO.setCodigoTaquilla(viaje.getCodigoTaquilla());
+        viajeDTO.setValorTiquete(viaje.getValorTiquete());
+        viajeDTO.setValorSeguro(viaje.getValorSeguro());
         return viajeDTO;
     }
 
@@ -194,5 +200,11 @@ public class Mapper {
         } else {
             return new ArrayList<>();
         }
+    }
+
+    public static Tiquete convertTiqueteDTOToDomain(TiqueteDTO tiqueteDTO) {
+        Tiquete tiquete = new Tiquete();
+        tiquete.setZplTiquete(tiqueteDTO.getZplTiquete());
+        return tiquete;
     }
 }

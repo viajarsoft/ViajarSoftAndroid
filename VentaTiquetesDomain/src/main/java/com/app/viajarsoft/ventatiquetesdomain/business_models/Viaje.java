@@ -8,7 +8,11 @@ public class Viaje {
 
     private String codigoTipoBus;
     private String codigoRuta;
-    private String codigoTipoPasaje;
+    private String tipoTiquete;
+    private String codigoTaquilla;
+    private String codigoOficina;
+    private double valorTiquete;
+    private double valorSeguro;
 
     public String getCodigoTipoBus() {
         return codigoTipoBus;
@@ -26,11 +30,43 @@ public class Viaje {
         this.codigoRuta = codigoRuta;
     }
 
-    public void setCodigoTipoPasaje(String codigoTipoPasaje) {
-        this.codigoTipoPasaje = codigoTipoPasaje;
+    public void setTipoTiquete(String tipoTiquete) {
+        this.tipoTiquete = tipoTiquete;
     }
 
-    public String getCodigoTipoPasaje() {
-        return codigoTipoPasaje;
+    public String getTipoTiquete() {
+        return tipoTiquete;
+    }
+
+    public String getCodigoTaquilla() {
+        return codigoTaquilla;
+    }
+
+    public void setCodigoTaquilla(String codigoTaquilla) {
+        this.codigoTaquilla = codigoTaquilla;
+    }
+
+    public String getCodigoOficina() {
+        return codigoOficina;
+    }
+
+    public void setCodigoOficina(String codigoOficina) {
+        this.codigoOficina = codigoOficina;
+    }
+
+    public double getValorTiquete() {
+        return valorTiquete;
+    }
+
+    public void setValorTiquete(double valorTiquete) {
+        this.valorTiquete = valorTiquete;
+    }
+
+    public double getValorSeguro() {
+        return valorSeguro;
+    }
+
+    public void setValorSeguro(double valorSeguro) {
+        this.valorSeguro = valorSeguro;
     }
 }
