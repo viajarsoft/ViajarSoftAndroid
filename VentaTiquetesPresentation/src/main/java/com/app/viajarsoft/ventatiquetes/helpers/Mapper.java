@@ -7,24 +7,28 @@ import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.DestinationPriceDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.RutaDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoBusDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoTiqueteDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TiqueteDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioRequestDTO;
 import com.app.viajarsoft.ventatiquetes.dto.UsuarioResponseDTO;
+import com.app.viajarsoft.ventatiquetes.dto.VentaPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DTO.ErrorDTO;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioRequest;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -207,4 +211,24 @@ public class Mapper {
         tiquete.setZplTiquete(tiqueteDTO.getZplTiquete());
         return tiquete;
     }
+
+    public static ResumenLiquidacionDTO convertResumenLiquidacionDomainToDTO(ResumenLiquidacion resumenLiquidacion) {
+        ResumenLiquidacionDTO resumenLiquidacionDTO = new ResumenLiquidacionDTO();
+        resumenLiquidacionDTO.setCodigoTaquilla(resumenLiquidacion.getCodigoTaquilla());
+        resumenLiquidacionDTO.setCodigoOficina(resumenLiquidacion.getCodigoOficina());
+        return resumenLiquidacionDTO;
+    }
+
+    public static VentaPorLiquidar convertVentaPorLiquidarDTOToDomain(VentaPorLiquidarDTO ventaPorLiquidarDTO){
+        VentaPorLiquidar ventaPorLiquidar = new VentaPorLiquidar();
+        ventaPorLiquidar.setCodigoOficina(ventaPorLiquidarDTO.getCodigoOficina());
+        ventaPorLiquidar.setCodigoTaquilla(ventaPorLiquidarDTO.getCodigoTaquilla());
+        ventaPorLiquidar.setCodigoTipoTiquete(ventaPorLiquidarDTO.getCodigoTipoTiquete());
+        ventaPorLiquidar.setFechaVenta(ventaPorLiquidarDTO.getFechaVenta());
+        ventaPorLiquidar.setCantidad(ventaPorLiquidarDTO.getCantidad());
+        ventaPorLiquidar.setValorTiquete(ventaPorLiquidarDTO.getValorTiquete());
+        ventaPorLiquidar.setValorSeguro(ventaPorLiquidarDTO.getValorTiquete());
+        return ventaPorLiquidar;
+    }
+
 }

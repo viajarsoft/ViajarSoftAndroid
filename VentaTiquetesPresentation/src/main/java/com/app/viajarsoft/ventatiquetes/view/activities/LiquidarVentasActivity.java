@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.presenters.LiquidarVentasPresenter;
+import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 
 public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter> {
 
@@ -15,6 +18,8 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     private TextView liquidar_tvPasajesVendidos;
     private TextView liquidar_tvValorTotal;
     private Button liquidar_btnLiquidar;
+    private UsuarioResponse usuarioResponse;
+    private VentaPorLiquidar ventaPorLiquidar;
 
 
 
@@ -23,8 +28,11 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liquidar_ventas);
         loadToolbar();
+        this.usuarioResponse = (UsuarioResponse) getIntent().getSerializableExtra(IConstants.USUARIO);
+        this.ventaPorLiquidar = (VentaPorLiquidar) getIntent().getSerializableExtra(IConstants.SUMMARY_LIQUIDATION);
         loadViews();
         loadListener();
+        setInfo();
     }
 
     private void loadListener() {
@@ -58,5 +66,11 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
                 onBackPressed();
             }
         });
+    }
+
+    private void setInfo(){
+        liquidar_tvUsuario.setText("Prueba");
+        liquidar_tvPasajesVendidos.setText(ventaPorLiquidar.getCantidad());
+        liquidar_tvValorTotal.setText((CharSequence) ventaPorLiquidar.getValorTiquete());
     }
 }

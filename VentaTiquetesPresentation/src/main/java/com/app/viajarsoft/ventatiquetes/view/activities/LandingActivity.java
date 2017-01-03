@@ -13,7 +13,9 @@ import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreference
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILandingView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 
 public class LandingActivity extends BaseActivity<LandingPresenter> implements ILandingView{
 
@@ -59,7 +61,10 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
         landing_cvLiquidarVentas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(LiquidarVentasActivity.class);
+                ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+                resumenLiquidacion.setCodigoOficina(usuarioResponse.getCodigoOficina());
+                resumenLiquidacion.setCodigoTaquilla(usuarioResponse.getCodigoOficina());
+                getPresenter().validateInternetToGetSummaryLiquidation(resumenLiquidacion);
             }
         });
     }
@@ -84,6 +89,19 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
                 Intent intent = new Intent(LandingActivity.this, VenderPasajesActivity.class);
                 intent.putExtra(IConstants.USUARIO, usuarioResponse);
                 intent.putExtra(IConstants.BUSSES_AND_ROUTES, bussesAndRoutes);
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void setIntentToLiquidarVentas(final VentaPorLiquidar ventaPorLiquidar) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(LandingActivity.this, LiquidarVentasActivity.class);
+                intent.putExtra(IConstants.USUARIO, usuarioResponse);
+                intent.putExtra(IConstants.SUMMARY_LIQUIDATION, ventaPorLiquidar);
                 startActivity(intent);
             }
         });

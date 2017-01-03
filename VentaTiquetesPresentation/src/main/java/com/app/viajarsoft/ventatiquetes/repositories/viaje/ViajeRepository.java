@@ -3,7 +3,9 @@ package com.app.viajarsoft.ventatiquetes.repositories.viaje;
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TiqueteDTO;
+import com.app.viajarsoft.ventatiquetes.dto.VentaPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
 import com.app.viajarsoft.ventatiquetes.helpers.Mapper;
 import com.app.viajarsoft.ventatiquetes.services.IViajeServices;
@@ -80,7 +82,14 @@ public class ViajeRepository implements IViajeRepository {
     }
 
     @Override
-    public VentaPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) {
-        return null;
+    public VentaPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError {
+        try{
+            ResumenLiquidacionDTO resumenLiquidacionDTO = Mapper.convertResumenLiquidacionDomainToDTO(resumenLiquidacion);
+            VentaPorLiquidarDTO ventaPorLiquidarDTO = viajeServices.getSummaryLiquidation(resumenLiquidacionDTO);
+            return Mapper.convertVentaPorLiquidarDTOToDomain(ventaPorLiquidarDTO);
+        }catch (RetrofitError retrofitError){
+            throw Mapper.convertRetrofitErrorToRepositoryError(retrofitError);
+        }
+
     }
 }

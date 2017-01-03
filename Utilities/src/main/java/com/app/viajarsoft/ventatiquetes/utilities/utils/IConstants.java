@@ -20,6 +20,7 @@ public interface IConstants {
     String ID_SUSCRIPTION_ONE_SIGNAL = "idSuscripcionOneSignal";
     String USUARIO = "usuario";
     String BUSSES_AND_ROUTES = "bussesAndRoutes";
+    String SUMMARY_LIQUIDATION = "summaryLiquidation";
 
 
     String TOKEN = "valorToken";

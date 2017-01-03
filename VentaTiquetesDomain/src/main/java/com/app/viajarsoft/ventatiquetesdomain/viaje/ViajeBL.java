@@ -56,6 +56,9 @@ public class ViajeBL {
 
 
     public VentaPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError {
+
+        Validations.validateNullParameter(resumenLiquidacion.getCodigoOficina(), resumenLiquidacion.getCodigoTaquilla());
+        Validations.validateEmptyParameter(resumenLiquidacion.getCodigoOficina(), resumenLiquidacion.getCodigoTaquilla());
         return viajeRepository.getSummaryLiquidation(resumenLiquidacion);
     }
 }

@@ -2,6 +2,7 @@ package com.app.viajarsoft.ventatiquetes.viaje;
 
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.IViajeRepository;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.ViajeBL;
@@ -182,6 +183,48 @@ public class ViajeBLTest {
         viajeBL.sellTicket(viaje);
 
         verify(viajeRepository).sellTicket(viaje);
+    }
+
+
+    @Test
+    public void getSummaryLiquidationWitchCodigoOficinaNullShouldReturnAnException() throws RepositoryError {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.NULL_PARAMETERS);
+        ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+        resumenLiquidacion.setCodigoOficina("1313");
+        resumenLiquidacion.setCodigoTaquilla(null);
+        viajeBL.getSummaryLiquidation(resumenLiquidacion);
+    }
+
+    @Test
+    public void getSummaryLiquidationWitchCodigoTaquillaNullShouldReturnAnException() throws RepositoryError {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.NULL_PARAMETERS);
+        ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+        resumenLiquidacion.setCodigoOficina(null);
+        resumenLiquidacion.setCodigoTaquilla("2323");
+        viajeBL.getSummaryLiquidation(resumenLiquidacion);
+    }
+
+    @Test
+    public void getSummaryLiquidationWitchEntityEmptyShouldReturnAnException() throws RepositoryError {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.EMPTY_PARAMETERS);
+        ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+        resumenLiquidacion.setCodigoOficina("");
+        resumenLiquidacion.setCodigoTaquilla("");
+        viajeBL.getSummaryLiquidation(resumenLiquidacion);
+    }
+
+
+    public void getSummaryLiquidationWithCorrectParametersShouldCallgetSummaryLiquidationInRepository() throws RepositoryError {
+        ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+        resumenLiquidacion.setCodigoOficina("2313");
+        resumenLiquidacion.setCodigoTaquilla("13223");
+
+        viajeBL.getSummaryLiquidation(resumenLiquidacion);
+
+        verify(viajeRepository).getSummaryLiquidation(resumenLiquidacion);
     }
 
     private Viaje getViaje() {

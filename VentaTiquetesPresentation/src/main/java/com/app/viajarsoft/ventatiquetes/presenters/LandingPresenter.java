@@ -63,6 +63,7 @@ public class LandingPresenter extends BasePresenter<ILandingView> {
             public void run() {
                 try {
                     VentaPorLiquidar ventaPorLiquidar = viajeBL.getSummaryLiquidation(resumenLiquidacion);
+                    getView().setIntentToLiquidarVentas(ventaPorLiquidar);
                 } catch (RepositoryError repositoryError) {
                     getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
                 }finally {

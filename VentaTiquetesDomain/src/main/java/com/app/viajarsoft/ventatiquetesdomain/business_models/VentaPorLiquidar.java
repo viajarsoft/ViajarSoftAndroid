@@ -1,12 +1,13 @@
 package com.app.viajarsoft.ventatiquetesdomain.business_models;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
 /**
  * Created by USUARIO on 29/12/2016.
  */
 
-public class VentaPorLiquidar {
+public class VentaPorLiquidar implements Serializable {
 
     private String codigoOficina;
     private String codigoTaquilla;

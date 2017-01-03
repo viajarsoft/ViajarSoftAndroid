@@ -25,5 +25,5 @@ public interface IViajeRepository {
 
     Tiquete sellTicket(Viaje viaje) throws RepositoryError;
 
-    VentaPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion);
+    VentaPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError;
 }
