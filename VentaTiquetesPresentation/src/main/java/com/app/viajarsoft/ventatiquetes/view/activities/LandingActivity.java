@@ -63,7 +63,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
             public void onClick(View v) {
                 ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
                 resumenLiquidacion.setCodigoOficina(usuarioResponse.getCodigoOficina());
-                resumenLiquidacion.setCodigoTaquilla(usuarioResponse.getCodigoOficina());
+                resumenLiquidacion.setCodigoTaquilla(usuarioResponse.getCodigoTaquilla());
                 getPresenter().validateInternetToGetSummaryLiquidation(resumenLiquidacion);
             }
         });

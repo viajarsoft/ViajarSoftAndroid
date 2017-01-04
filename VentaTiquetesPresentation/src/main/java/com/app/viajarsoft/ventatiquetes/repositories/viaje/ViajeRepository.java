@@ -85,8 +85,6 @@ public class ViajeRepository implements IViajeRepository {
     @Override
     public ResumenVentasPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError {
         try{
-            resumenLiquidacion.setCodigoOficina("002");
-            resumenLiquidacion.setCodigoTaquilla("014");
             ResumenLiquidacionDTO resumenLiquidacionDTO = Mapper.convertResumenLiquidacionDomainToDTO(resumenLiquidacion);
             ResumenVentasPorLiquidarDTO resumenVentasPorLiquidarDTO = viajeServices.getSummaryLiquidation(resumenLiquidacionDTO);
             return Mapper.convertResumenVentasPorLiquidarDTOToDomain(resumenVentasPorLiquidarDTO);
