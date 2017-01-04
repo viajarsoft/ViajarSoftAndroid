@@ -4,6 +4,7 @@ import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILandingView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.ViajeBL;
 
@@ -62,8 +63,8 @@ public class LandingPresenter extends BasePresenter<ILandingView> {
             @Override
             public void run() {
                 try {
-                    VentaPorLiquidar ventaPorLiquidar = viajeBL.getSummaryLiquidation(resumenLiquidacion);
-                    getView().setIntentToLiquidarVentas(ventaPorLiquidar);
+                    ResumenVentasPorLiquidar resumenVentasPorLiquidar = viajeBL.getSummaryLiquidation(resumenLiquidacion);
+                    getView().setIntentToLiquidarVentas(resumenVentasPorLiquidar.getVentaPorLiquidar());
                 } catch (RepositoryError repositoryError) {
                     getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
                 }finally {

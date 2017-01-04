@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.DestinationPriceDTO;
+import com.app.viajarsoft.ventatiquetes.dto.LiquidacionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ResumenVentasPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.RutaDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoBusDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoTiqueteDTO;
@@ -20,8 +22,10 @@ import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DTO.ErrorDTO;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
@@ -219,7 +223,13 @@ public class Mapper {
         return resumenLiquidacionDTO;
     }
 
-    public static VentaPorLiquidar convertVentaPorLiquidarDTOToDomain(VentaPorLiquidarDTO ventaPorLiquidarDTO){
+    public static ResumenVentasPorLiquidar convertResumenVentasPorLiquidarDTOToDomain(ResumenVentasPorLiquidarDTO resumenVentasPorLiquidarDTO){
+        ResumenVentasPorLiquidar resumenVentasPorLiquidar = new ResumenVentasPorLiquidar();
+        resumenVentasPorLiquidar.setVentaPorLiquidar(convertVentaPorLiquidarDTOToDomain(resumenVentasPorLiquidarDTO.getVentaPorLiquidar()));
+        return resumenVentasPorLiquidar;
+    }
+
+    public static VentaPorLiquidar convertVentaPorLiquidarDTOToDomain (VentaPorLiquidarDTO ventaPorLiquidarDTO){
         VentaPorLiquidar ventaPorLiquidar = new VentaPorLiquidar();
         ventaPorLiquidar.setCodigoOficina(ventaPorLiquidarDTO.getCodigoOficina());
         ventaPorLiquidar.setCodigoTaquilla(ventaPorLiquidarDTO.getCodigoTaquilla());
@@ -227,8 +237,20 @@ public class Mapper {
         ventaPorLiquidar.setFechaVenta(ventaPorLiquidarDTO.getFechaVenta());
         ventaPorLiquidar.setCantidad(ventaPorLiquidarDTO.getCantidad());
         ventaPorLiquidar.setValorTiquete(ventaPorLiquidarDTO.getValorTiquete());
-        ventaPorLiquidar.setValorSeguro(ventaPorLiquidarDTO.getValorTiquete());
+        ventaPorLiquidar.setValorSeguro(ventaPorLiquidar.getValorSeguro());
+        ventaPorLiquidar.setNombreTaquilla(ventaPorLiquidarDTO.getNombreTaquilla());
         return ventaPorLiquidar;
+    }
+
+    public static LiquidacionDTO convertLiquidationDomainToDTO(Liquidacion liquidacion){
+        LiquidacionDTO liquidacionDTO = new LiquidacionDTO();
+        liquidacionDTO.setCodigoOficina(liquidacion.getCodigoOficina());
+        liquidacionDTO.setCodigoUsuario(liquidacion.getCodigoUsuario());
+        liquidacionDTO.setFechaVenta(liquidacion.getFechaVenta());
+        liquidacionDTO.setTipoVenta(liquidacion.getTipoVenta());
+        liquidacionDTO.setCodigoTaquilla(liquidacion.getCodigoTaquilla());
+
+        return liquidacionDTO;
     }
 
 }

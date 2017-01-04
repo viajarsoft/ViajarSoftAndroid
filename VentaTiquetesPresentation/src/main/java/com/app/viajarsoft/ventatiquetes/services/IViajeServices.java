@@ -1,9 +1,11 @@
 package com.app.viajarsoft.ventatiquetes.services;
 
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.LiquidacionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ResumenVentasPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TiqueteDTO;
 import com.app.viajarsoft.ventatiquetes.dto.VentaPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
@@ -32,5 +34,8 @@ public interface IViajeServices {
     TiqueteDTO sellTicket(@Body ViajeDTO viajeDTO);
 
     @POST("/Factura/ObtenerResumenVentasPorLiquidar")
-    VentaPorLiquidarDTO getSummaryLiquidation (@Body ResumenLiquidacionDTO resumenLiquidacionDTO);
+    ResumenVentasPorLiquidarDTO getSummaryLiquidation (@Body ResumenLiquidacionDTO resumenLiquidacionDTO);
+
+    @POST("/Factura//ObtenerLiquidacionTaquillero")
+    void getLiquidation (@Body LiquidacionDTO liquidacionDTO);
 }

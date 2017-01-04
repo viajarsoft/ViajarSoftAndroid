@@ -2,8 +2,10 @@ package com.app.viajarsoft.ventatiquetesdomain.viaje;
 
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
@@ -25,5 +27,7 @@ public interface IViajeRepository {
 
     Tiquete sellTicket(Viaje viaje) throws RepositoryError;
 
-    VentaPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError;
+    ResumenVentasPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError;
+
+    void getLiquidation(Liquidacion liquidacion);
 }

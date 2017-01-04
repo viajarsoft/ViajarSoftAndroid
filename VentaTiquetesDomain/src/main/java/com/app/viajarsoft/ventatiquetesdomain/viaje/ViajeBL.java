@@ -3,8 +3,10 @@ package com.app.viajarsoft.ventatiquetesdomain.viaje;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.Validations;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
@@ -55,10 +57,17 @@ public class ViajeBL {
     }
 
 
-    public VentaPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError {
+    public ResumenVentasPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError {
 
         Validations.validateNullParameter(resumenLiquidacion.getCodigoOficina(), resumenLiquidacion.getCodigoTaquilla());
         Validations.validateEmptyParameter(resumenLiquidacion.getCodigoOficina(), resumenLiquidacion.getCodigoTaquilla());
         return viajeRepository.getSummaryLiquidation(resumenLiquidacion);
+    }
+
+    public void getLiquidation(Liquidacion liquidacion) throws RepositoryError{
+        Validations.validateNullParameter(liquidacion);
+        Validations.validateEmptyParameter(liquidacion.getCodigoOficina(), liquidacion.getCodigoTaquilla(), liquidacion.getCodigoUsuario(), liquidacion.getFechaVenta());
+        Validations.validateNullParameter(liquidacion.getCodigoOficina(), liquidacion.getCodigoTaquilla(), liquidacion.getCodigoUsuario(), liquidacion.getFechaVenta());
+       // return viajeRepository.getLiquidation(liquidacion);
     }
 }

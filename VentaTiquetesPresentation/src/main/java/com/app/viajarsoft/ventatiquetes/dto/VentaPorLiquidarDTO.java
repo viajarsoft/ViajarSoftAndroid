@@ -8,67 +8,76 @@ import java.text.DecimalFormat;
 
 public class VentaPorLiquidarDTO {
 
-    private String codigoOficina;
-    private String codigoTaquilla;
-    private String codigoTipoTiquete;
-    private String fechaVenta;
-    private int cantidad;
-    private DecimalFormat valorTiquete;
-    private DecimalFormat valorSeguro;
-
-    public DecimalFormat getValorSeguro() {
-        return valorSeguro;
-    }
-
-    public void setValorSeguro(DecimalFormat valorSeguro) {
-        this.valorSeguro = valorSeguro;
-    }
-
-    public String getCodigoTaquilla() {
-        return codigoTaquilla;
-    }
-
-    public void setCodigoTaquilla(String codigoTaquilla) {
-        this.codigoTaquilla = codigoTaquilla;
-    }
-
-    public String getCodigoTipoTiquete() {
-        return codigoTipoTiquete;
-    }
-
-    public void setCodigoTipoTiquete(String codigoTipoTiquete) {
-        this.codigoTipoTiquete = codigoTipoTiquete;
-    }
-
-    public String getFechaVenta() {
-        return fechaVenta;
-    }
-
-    public void setFechaVenta(String fechaVenta) {
-        this.fechaVenta = fechaVenta;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public DecimalFormat getValorTiquete() {
-        return valorTiquete;
-    }
-
-    public void setValorTiquete(DecimalFormat valorTiquete) {
-        this.valorTiquete = valorTiquete;
-    }
+    private String CodigoOficina;
+    private String CodigoTaquilla;
+    private String CodigoTipoTiquete;
+    private String FechaVenta;
+    private int Cantidad;
+    private Double ValorTiquete;
+    private Double ValorSeguro;
+    private String NombreTaquilla;
 
     public String getCodigoOficina() {
-        return codigoOficina;
+        return CodigoOficina;
     }
 
     public void setCodigoOficina(String codigoOficina) {
-        this.codigoOficina = codigoOficina;
+        CodigoOficina = codigoOficina;
+    }
+
+    public String getCodigoTaquilla() {
+        return CodigoTaquilla;
+    }
+
+    public void setCodigoTaquilla(String codigoTaquilla) {
+        CodigoTaquilla = codigoTaquilla;
+    }
+
+    public String getCodigoTipoTiquete() {
+        return CodigoTipoTiquete;
+    }
+
+    public void setCodigoTipoTiquete(String codigoTipoTiquete) {
+        CodigoTipoTiquete = codigoTipoTiquete;
+    }
+
+    public String getFechaVenta() {
+        return FechaVenta;
+    }
+
+    public void setFechaVenta(String fechaVenta) {
+        FechaVenta = fechaVenta;
+    }
+
+    public int getCantidad() {
+        return Cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        Cantidad = cantidad;
+    }
+
+    public Double getValorTiquete() {
+        return ValorTiquete;
+    }
+
+    public void setValorTiquete(Double valorTiquete) {
+        ValorTiquete = valorTiquete;
+    }
+
+    public Double getValorSeguro() {
+        return ValorSeguro;
+    }
+
+    public void setValorSeguro(Double valorSeguro) {
+        ValorSeguro = valorSeguro;
+    }
+
+    public String getNombreTaquilla() {
+        return NombreTaquilla;
+    }
+
+    public void setNombreTaquilla(String nombreTaquilla) {
+        NombreTaquilla = nombreTaquilla;
     }
 }

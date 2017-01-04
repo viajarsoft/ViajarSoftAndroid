@@ -1,6 +1,7 @@
 package com.app.viajarsoft.ventatiquetes.viaje;
 
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
@@ -227,6 +228,42 @@ public class ViajeBLTest {
         verify(viajeRepository).getSummaryLiquidation(resumenLiquidacion);
     }
 
+    @Test
+    public void getLiquidationWitchEntityEmptyShouldReturnAnException() throws RepositoryError {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.EMPTY_PARAMETERS);
+        Liquidacion liquidacion = new Liquidacion();
+        liquidacion.setCodigoOficina("");
+        liquidacion.setFechaVenta("");
+        liquidacion.setCodigoTaquilla("");
+        liquidacion.setCodigoUsuario("");
+
+        viajeBL.getLiquidation(liquidacion);
+    }
+
+    @Test
+    public void getLiquidationWitchNullParametersShouldReturnAnException() throws RepositoryError {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage(IConstants.NULL_PARAMETERS);
+        Liquidacion liquidacion = new Liquidacion();
+        liquidacion.setCodigoOficina(null);
+        liquidacion.setFechaVenta(null);
+        liquidacion.setCodigoTaquilla(null);
+        liquidacion.setCodigoUsuario(null);
+
+        viajeBL.getLiquidation(liquidacion);
+    }
+
+    public void getLiquidationWithCorrectParametersShouldCallgetLiquidationInRepository() throws RepositoryError {
+        Liquidacion liquidacion = getLiquidacion();
+
+        viajeBL.getLiquidation(liquidacion);
+
+        verify(viajeRepository).getLiquidation(liquidacion);
+    }
+
+
+
     private Viaje getViaje() {
         Viaje viaje = new Viaje();
         viaje.setCodigoTipoBus("123");
@@ -238,5 +275,15 @@ public class ViajeBLTest {
         viaje.setValorSeguro(200);
 
         return viaje;
+    }
+
+    private Liquidacion getLiquidacion() {
+        Liquidacion liquidacion = new Liquidacion();
+        liquidacion.setCodigoOficina("1122");
+        liquidacion.setFechaVenta("02-10-2016");
+        liquidacion.setCodigoTaquilla("002");
+        liquidacion.setCodigoUsuario("0378");
+
+        return liquidacion;
     }
 }

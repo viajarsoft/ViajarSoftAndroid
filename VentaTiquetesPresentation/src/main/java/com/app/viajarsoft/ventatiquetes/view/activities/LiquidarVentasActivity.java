@@ -9,10 +9,11 @@ import android.widget.TextView;
 import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.presenters.LiquidarVentasPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
+import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 
-public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter> {
+public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter> implements ILiquidarVentasView {
 
     private TextView liquidar_tvUsuario;
     private TextView liquidar_tvPasajesVendidos;
@@ -69,8 +70,13 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     }
 
     private void setInfo(){
-        liquidar_tvUsuario.setText("Prueba");
-        liquidar_tvPasajesVendidos.setText(ventaPorLiquidar.getCantidad());
-        liquidar_tvValorTotal.setText((CharSequence) ventaPorLiquidar.getValorTiquete());
+        liquidar_tvUsuario.setText(ventaPorLiquidar.getNombreTaquilla());
+        liquidar_tvPasajesVendidos.setText(ventaPorLiquidar.getCantidad() + "");
+        liquidar_tvValorTotal.setText(ventaPorLiquidar.getValorTiquete().toString());
+    }
+
+    @Override
+    public void printLiquidation() {
+
     }
 }

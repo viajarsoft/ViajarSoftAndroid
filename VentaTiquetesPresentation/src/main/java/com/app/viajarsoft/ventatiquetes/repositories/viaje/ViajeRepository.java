@@ -4,8 +4,8 @@ import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ResumenVentasPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TiqueteDTO;
-import com.app.viajarsoft.ventatiquetes.dto.VentaPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
 import com.app.viajarsoft.ventatiquetes.helpers.Mapper;
 import com.app.viajarsoft.ventatiquetes.services.IViajeServices;
@@ -13,11 +13,12 @@ import com.app.viajarsoft.ventatiquetes.utilities.helpers.ICustomSharedPreferenc
 import com.app.viajarsoft.ventatiquetes.utilities.services.ServicesFactory;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.IViajeRepository;
 
@@ -82,14 +83,21 @@ public class ViajeRepository implements IViajeRepository {
     }
 
     @Override
-    public VentaPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError {
+    public ResumenVentasPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError {
         try{
+            resumenLiquidacion.setCodigoOficina("002");
+            resumenLiquidacion.setCodigoTaquilla("014");
             ResumenLiquidacionDTO resumenLiquidacionDTO = Mapper.convertResumenLiquidacionDomainToDTO(resumenLiquidacion);
-            VentaPorLiquidarDTO ventaPorLiquidarDTO = viajeServices.getSummaryLiquidation(resumenLiquidacionDTO);
-            return Mapper.convertVentaPorLiquidarDTOToDomain(ventaPorLiquidarDTO);
+            ResumenVentasPorLiquidarDTO resumenVentasPorLiquidarDTO = viajeServices.getSummaryLiquidation(resumenLiquidacionDTO);
+            return Mapper.convertResumenVentasPorLiquidarDTOToDomain(resumenVentasPorLiquidarDTO);
         }catch (RetrofitError retrofitError){
             throw Mapper.convertRetrofitErrorToRepositoryError(retrofitError);
         }
+
+    }
+
+    @Override
+    public void getLiquidation(Liquidacion liquidacion) {
 
     }
 }

@@ -14,8 +14,9 @@ public class VentaPorLiquidar implements Serializable {
     private String codigoTipoTiquete;
     private String fechaVenta;
     private int cantidad;
-    private DecimalFormat valorTiquete;
-    private DecimalFormat valorSeguro;
+    private Double valorTiquete;
+    private Double valorSeguro;
+    private String nombreTaquilla;
 
     public String getCodigoOficina() {
         return codigoOficina;
@@ -25,36 +26,12 @@ public class VentaPorLiquidar implements Serializable {
         this.codigoOficina = codigoOficina;
     }
 
-    public DecimalFormat getValorSeguro() {
-        return valorSeguro;
+    public String getCodigoTaquilla() {
+        return codigoTaquilla;
     }
 
-    public void setValorSeguro(DecimalFormat valorSeguro) {
-        this.valorSeguro = valorSeguro;
-    }
-
-    public DecimalFormat getValorTiquete() {
-        return valorTiquete;
-    }
-
-    public void setValorTiquete(DecimalFormat valorTiquete) {
-        this.valorTiquete = valorTiquete;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public String getFechaVenta() {
-        return fechaVenta;
-    }
-
-    public void setFechaVenta(String fechaVenta) {
-        this.fechaVenta = fechaVenta;
+    public void setCodigoTaquilla(String codigoTaquilla) {
+        this.codigoTaquilla = codigoTaquilla;
     }
 
     public String getCodigoTipoTiquete() {
@@ -65,11 +42,43 @@ public class VentaPorLiquidar implements Serializable {
         this.codigoTipoTiquete = codigoTipoTiquete;
     }
 
-    public String getCodigoTaquilla() {
-        return codigoTaquilla;
+    public String getFechaVenta() {
+        return fechaVenta;
     }
 
-    public void setCodigoTaquilla(String codigoTaquilla) {
-        this.codigoTaquilla = codigoTaquilla;
+    public void setFechaVenta(String fechaVenta) {
+        this.fechaVenta = fechaVenta;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Double getValorTiquete() {
+        return valorTiquete;
+    }
+
+    public void setValorTiquete(Double valorTiquete) {
+        this.valorTiquete = valorTiquete;
+    }
+
+    public Double getValorSeguro() {
+        return valorSeguro;
+    }
+
+    public void setValorSeguro(Double valorSeguro) {
+        this.valorSeguro = valorSeguro;
+    }
+
+    public String getNombreTaquilla() {
+        return nombreTaquilla;
+    }
+
+    public void setNombreTaquilla(String nombreTaquilla) {
+        this.nombreTaquilla = nombreTaquilla;
     }
 }
