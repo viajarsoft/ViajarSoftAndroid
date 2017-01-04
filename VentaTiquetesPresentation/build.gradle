@@ -9,6 +9,7 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -55,4 +56,5 @@ dependencies {
     compile files('libs/prov-1.53.0.0.jar')
     compile files('libs/snmp6_1.jar')
     compile files('libs/ZSDK_ANDROID_API.jar')
+    compile 'testfairy:testfairy-android-sdk:1.+@aar'
 }
