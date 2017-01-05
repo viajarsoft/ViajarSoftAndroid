@@ -76,7 +76,7 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     }
 
     @Override
-    public void printLiquidation() {
+    public void printLiquidation(String zplResumen) {
 
     }
 }

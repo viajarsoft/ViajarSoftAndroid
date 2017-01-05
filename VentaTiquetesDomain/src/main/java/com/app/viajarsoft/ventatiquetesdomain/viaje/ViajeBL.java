@@ -6,6 +6,7 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
@@ -64,10 +65,10 @@ public class ViajeBL {
         return viajeRepository.getSummaryLiquidation(resumenLiquidacion);
     }
 
-    public void getLiquidation(Liquidacion liquidacion) throws RepositoryError{
+    public ResumenLiquidacionImpresion getLiquidation(Liquidacion liquidacion) throws RepositoryError{
         Validations.validateNullParameter(liquidacion);
         Validations.validateEmptyParameter(liquidacion.getCodigoOficina(), liquidacion.getCodigoTaquilla(), liquidacion.getCodigoUsuario(), liquidacion.getFechaVenta());
         Validations.validateNullParameter(liquidacion.getCodigoOficina(), liquidacion.getCodigoTaquilla(), liquidacion.getCodigoUsuario(), liquidacion.getFechaVenta());
-       // return viajeRepository.getLiquidation(liquidacion);
+        return viajeRepository.getLiquidation(liquidacion);
     }
 }

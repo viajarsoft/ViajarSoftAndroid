@@ -5,6 +5,7 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
@@ -44,7 +45,7 @@ public class ViajeRepositoryTest implements IViajeRepository {
     }
 
     @Override
-    public void getLiquidation(Liquidacion liquidacion) {
-        return;
+    public ResumenLiquidacionImpresion getLiquidation(Liquidacion liquidacion) {
+        return null;
     }
 }

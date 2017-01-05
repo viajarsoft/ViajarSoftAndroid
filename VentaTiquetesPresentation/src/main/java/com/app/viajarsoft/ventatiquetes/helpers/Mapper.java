@@ -9,6 +9,7 @@ import com.app.viajarsoft.ventatiquetes.dto.LiquidacionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionImpresionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenVentasPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.RutaDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TipoBusDTO;
@@ -25,6 +26,7 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Ruta;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoBus;
@@ -251,6 +253,14 @@ public class Mapper {
         liquidacionDTO.setCodigoTaquilla(liquidacion.getCodigoTaquilla());
 
         return liquidacionDTO;
+    }
+
+    public static ResumenLiquidacionImpresion convertResumenLiquidacionImpresionDTOToDomain(ResumenLiquidacionImpresionDTO resumenLiquidacionImpresionDTO){
+        ResumenLiquidacionImpresion resumenLiquidacionImpresion = new ResumenLiquidacionImpresion();
+
+        resumenLiquidacionImpresion.setZplResumen(resumenLiquidacionImpresionDTO.getZplResumen());
+
+        return resumenLiquidacionImpresion;
     }
 
 }

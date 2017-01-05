@@ -142,4 +142,20 @@ public class LandingPresenterTest {
 
         verify(viajeBL).getSummaryLiquidation(resumenLiquidacion);
     }
+
+    @Test
+    public void methodoGetSummaryLiquidationShouldShowAlertDialogIfAnErrorOcurred() throws RepositoryError {
+        RepositoryError repositoryError = new RepositoryError(IConstants.DEFAUL_ERROR);
+        repositoryError.setIdError(0);
+        ResumenLiquidacion resumenLiquidacion = new ResumenLiquidacion();
+        resumenLiquidacion.setCodigoTaquilla("1213");
+        resumenLiquidacion.setCodigoOficina("34356");
+        when(viajeRepository.getSummaryLiquidation(resumenLiquidacion)).thenThrow(repositoryError);
+
+        landingPresenter.getSummaryLiquidation(resumenLiquidacion);
+
+        verify(landingView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+        verify(landingView).dismissProgressDialog();
+
+    }
 }

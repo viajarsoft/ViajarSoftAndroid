@@ -1,9 +1,11 @@
 package com.app.viajarsoft.ventatiquetes.repositories.viaje;
 
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
+import com.app.viajarsoft.ventatiquetes.dto.LiquidacionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
+import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionImpresionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenVentasPorLiquidarDTO;
 import com.app.viajarsoft.ventatiquetes.dto.TiqueteDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ViajeDTO;
@@ -16,6 +18,7 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
@@ -95,7 +98,13 @@ public class ViajeRepository implements IViajeRepository {
     }
 
     @Override
-    public void getLiquidation(Liquidacion liquidacion) {
-
+    public ResumenLiquidacionImpresion getLiquidation(Liquidacion liquidacion) throws RepositoryError {
+       try{
+           LiquidacionDTO liquidacionDTO = Mapper.convertLiquidationDomainToDTO(liquidacion);
+           ResumenLiquidacionImpresionDTO resumenLiquidacionImpresionDTO = viajeServices.getLiquidation(liquidacionDTO);
+           return Mapper.convertResumenLiquidacionImpresionDTOToDomain(resumenLiquidacionImpresionDTO);
+       }catch (RetrofitError retrofitError){
+           throw Mapper.convertRetrofitErrorToRepositoryError(retrofitError);
+       }
     }
 }

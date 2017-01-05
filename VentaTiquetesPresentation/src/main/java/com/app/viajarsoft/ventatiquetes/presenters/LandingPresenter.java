@@ -59,19 +59,24 @@ public class LandingPresenter extends BasePresenter<ILandingView> {
     }
 
     public void createThreadToGetSummaryLiquidation(final ResumenLiquidacion resumenLiquidacion) {
+        getView().showProgressDialog(R.string.text_please_wait);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    ResumenVentasPorLiquidar resumenVentasPorLiquidar = viajeBL.getSummaryLiquidation(resumenLiquidacion);
-                    getView().setIntentToLiquidarVentas(resumenVentasPorLiquidar.getVentaPorLiquidar());
-                } catch (RepositoryError repositoryError) {
-                    getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
-                }finally {
-                    getView().dismissProgressDialog();
-                }
+                getSummaryLiquidation(resumenLiquidacion);
             }
         });
         thread.start();
+    }
+
+    public void getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) {
+        try {
+            ResumenVentasPorLiquidar resumenVentasPorLiquidar = viajeBL.getSummaryLiquidation(resumenLiquidacion);
+            getView().setIntentToLiquidarVentas(resumenVentasPorLiquidar.getVentaPorLiquidar());
+        } catch (RepositoryError repositoryError) {
+            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+        }finally {
+            getView().dismissProgressDialog();
+        }
     }
 }

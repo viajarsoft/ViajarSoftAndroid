@@ -4,6 +4,7 @@ import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.presenters.LiquidarVentasPresenter;
 import com.app.viajarsoft.ventatiquetes.presenters.VenderPasajesPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.IValidateInternet;
+import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
@@ -87,7 +88,22 @@ public class LiquidarVentasPresenterTest {
         liquidarVentasPresenter.createThreadToGetLiquidation(liquidacion);
 
         verify(viajeBL).getLiquidation(liquidacion);
+
+    }
+
+    @Test
+    public void methodoGetSummaryLiquidationShouldShowAlertDialogIfAnErrorOcurred() throws RepositoryError {
+        RepositoryError repositoryError = new RepositoryError(IConstants.DEFAUL_ERROR);
+        repositoryError.setIdError(0);
+        Liquidacion liquidacion = getLiquidacion();
+
+        when(viajeRepository.getLiquidation(liquidacion)).thenThrow(repositoryError);
+
+        liquidarVentasPresenter.getLiquidation(liquidacion);
+
+        verify(liquidarVentasView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
         verify(liquidarVentasView).dismissProgressDialog();
+
     }
 
 
