@@ -21,6 +21,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
 
     private CardView landing_cvVenderPasajes;
     private CardView landing_cvLiquidarVentas;
+    private CardView landing_cvImpresora;
 
     private UsuarioResponse usuarioResponse;
 
@@ -39,13 +40,24 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
     private void loadViews() {
         landing_cvVenderPasajes = (CardView) findViewById(R.id.landing_cvVenderPasajes);
         landing_cvLiquidarVentas = (CardView) findViewById(R.id.landing_cvLiquidarVentas);
-
+        landing_cvImpresora = (CardView) findViewById(R.id.landing_cvImpresora);
         loadListenerToTheControls();
     }
 
     private void loadListenerToTheControls() {
         loadOnClickToTheControlLandingCvVenderPasajes();
         loadOnClickToTheControlLandingCvLiquidarVentas();
+        loadOnClickToTheControlLandingCvImpresora();
+    }
+
+    private void loadOnClickToTheControlLandingCvImpresora() {
+        landing_cvImpresora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LandingActivity.this, ImpresionActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void loadOnClickToTheControlLandingCvVenderPasajes() {

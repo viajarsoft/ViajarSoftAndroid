@@ -37,6 +37,10 @@
         <activity
             android:name=".view.activities.LiquidarVentasActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.activities.ImpresionActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
