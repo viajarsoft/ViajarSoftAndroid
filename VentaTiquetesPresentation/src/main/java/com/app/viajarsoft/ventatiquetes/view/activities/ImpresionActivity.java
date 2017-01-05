@@ -38,7 +38,7 @@ public class ImpresionActivity extends AppCompatActivity implements DiscoveryHan
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_impresion);
         setProgressBarIndeterminateVisibility(true);
 
         impresion_rvList = (RecyclerView) findViewById(R.id.impresion_rvList);
