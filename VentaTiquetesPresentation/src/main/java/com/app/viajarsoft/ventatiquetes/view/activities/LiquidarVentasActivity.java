@@ -1,5 +1,6 @@
 package com.app.viajarsoft.ventatiquetes.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -7,9 +8,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.app.viajarsoft.ventatiquetes.R;
+import com.app.viajarsoft.ventatiquetes.dependency_injection.DomainModule;
+import com.app.viajarsoft.ventatiquetes.presenters.LandingPresenter;
 import com.app.viajarsoft.ventatiquetes.presenters.LiquidarVentasPresenter;
+import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 
@@ -19,7 +24,7 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     private TextView liquidar_tvPasajesVendidos;
     private TextView liquidar_tvValorTotal;
     private Button liquidar_btnLiquidar;
-    private UsuarioResponse usuarioResponse;
+    private String usuario;
     private VentaPorLiquidar ventaPorLiquidar;
 
 
@@ -29,7 +34,10 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liquidar_ventas);
         loadToolbar();
-        this.usuarioResponse = (UsuarioResponse) getIntent().getSerializableExtra(IConstants.USUARIO);
+        setPresenter(new LiquidarVentasPresenter(DomainModule.getViajeBLInstance(new CustomSharedPreferences(this))));
+        getPresenter().inject(this, getValidateInternet());
+        createProgressDialog();
+        this.usuario = getIntent().getStringExtra(IConstants.CODIGOUSUARIO);
         this.ventaPorLiquidar = (VentaPorLiquidar) getIntent().getSerializableExtra(IConstants.SUMMARY_LIQUIDATION);
         loadViews();
         loadListener();
@@ -38,12 +46,17 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
 
     private void loadListener() {
 
-        liquidar_btnLiquidar.setOnClickListener(new View.OnClickListener() {
+       /* liquidar_btnLiquidar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: logica para imprimir factura
+                Liquidacion liquidacion = new Liquidacion();
+                liquidacion.setCodigoOficina(ventaPorLiquidar.getCodigoOficina());
+                liquidacion.setCodigoTaquilla(ventaPorLiquidar.getCodigoTaquilla());
+                liquidacion.setFechaVenta(ventaPorLiquidar.getFechaVenta());
+                liquidacion.setCodigoUsuario(usuario);
+                getPresenter().validateInternetToGetLiquidation(liquidacion);
             }
-        });
+        });*/
     }
 
     private void loadViews() {
@@ -76,7 +89,8 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     }
 
     @Override
-    public void printLiquidation(String zplResumen) {
-
+    public void intentToImpresionActivity(String zplResumen) {
+        Intent intent = new Intent(LiquidarVentasActivity.this, ImpresionActivity.class);
+        intent.putExtra(IConstants.IMPRESION, zplResumen);
     }
 }

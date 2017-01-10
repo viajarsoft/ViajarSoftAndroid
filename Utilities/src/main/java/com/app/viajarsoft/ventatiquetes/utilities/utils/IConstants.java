@@ -21,10 +21,11 @@ public interface IConstants {
     String USUARIO = "usuario";
     String BUSSES_AND_ROUTES = "bussesAndRoutes";
     String SUMMARY_LIQUIDATION = "summaryLiquidation";
-
+    String CODIGOUSUARIO = "codigoUsuario";
+    String IMPRESION = "impresion";
 
     String TOKEN = "valorToken";
-
+    String ADDRESSMAC = "addressMac";
 
     /**
      * Constants

@@ -22,7 +22,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
     private CardView landing_cvVenderPasajes;
     private CardView landing_cvLiquidarVentas;
     private CardView landing_cvImpresora;
-
+    private String usuario;
     private UsuarioResponse usuarioResponse;
 
     @Override
@@ -33,6 +33,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
         getPresenter().inject(this, getValidateInternet());
         createProgressDialog();
         this.usuarioResponse = (UsuarioResponse) getIntent().getSerializableExtra(IConstants.USUARIO);
+        this.usuario = getIntent().getStringExtra(IConstants.CODIGOUSUARIO);
         loadToolbar();
         loadViews();
     }
@@ -112,7 +113,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
             @Override
             public void run() {
                 Intent intent = new Intent(LandingActivity.this, LiquidarVentasActivity.class);
-                intent.putExtra(IConstants.USUARIO, usuarioResponse);
+                intent.putExtra(IConstants.CODIGOUSUARIO, usuario);
                 intent.putExtra(IConstants.SUMMARY_LIQUIDATION, ventaPorLiquidar);
                 startActivity(intent);
             }

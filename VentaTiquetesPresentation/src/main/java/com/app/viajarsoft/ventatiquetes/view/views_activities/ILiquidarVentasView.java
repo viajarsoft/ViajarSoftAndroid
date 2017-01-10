@@ -6,5 +6,5 @@ package com.app.viajarsoft.ventatiquetes.view.views_activities;
 
 public interface ILiquidarVentasView extends IBaseView {
 
-    void printLiquidation(String zplResumen);
+    void intentToImpresionActivity(String zplResumen);
 }

@@ -8,7 +8,6 @@ public class LiquidacionDTO {
 
     private String CodigoOficina;
     private String CodigoTaquilla;
-    private String TipoVenta;
     private String FechaVenta;
     private String CodigoUsuario;
 
@@ -26,14 +25,6 @@ public class LiquidacionDTO {
 
     public void setCodigoTaquilla(String codigoTaquilla) {
         CodigoTaquilla = codigoTaquilla;
-    }
-
-    public String getTipoVenta() {
-        return TipoVenta;
-    }
-
-    public void setTipoVenta(String tipoVenta) {
-        TipoVenta = tipoVenta;
     }
 
     public String getFechaVenta() {

@@ -10,5 +10,5 @@ public interface ILoginView extends IBaseView {
 
     void saveToken(String token);
 
-    void startLanding(UsuarioResponse usuarioResponse);
+    void startLanding(UsuarioResponse usuarioResponse, String usuario);
 }

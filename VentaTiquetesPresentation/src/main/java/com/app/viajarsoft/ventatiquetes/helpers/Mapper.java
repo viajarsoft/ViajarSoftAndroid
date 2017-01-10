@@ -249,7 +249,6 @@ public class Mapper {
         liquidacionDTO.setCodigoOficina(liquidacion.getCodigoOficina());
         liquidacionDTO.setCodigoUsuario(liquidacion.getCodigoUsuario());
         liquidacionDTO.setFechaVenta(liquidacion.getFechaVenta());
-        liquidacionDTO.setTipoVenta(liquidacion.getTipoVenta());
         liquidacionDTO.setCodigoTaquilla(liquidacion.getCodigoTaquilla());
 
         return liquidacionDTO;

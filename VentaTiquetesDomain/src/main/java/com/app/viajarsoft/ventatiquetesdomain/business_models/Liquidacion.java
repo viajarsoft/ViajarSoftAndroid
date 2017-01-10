@@ -11,16 +11,6 @@ public class Liquidacion {
     private String fechaVenta;
     private String codigoUsuario;
 
-    public String getTipoVenta() {
-        return tipoVenta;
-    }
-
-    public void setTipoVenta(String tipoVenta) {
-        this.tipoVenta = tipoVenta;
-    }
-
-    private String tipoVenta;
-
     public String getCodigoOficina() {
         return codigoOficina;
     }

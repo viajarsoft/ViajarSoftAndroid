@@ -28,5 +28,6 @@
     <string name="text_destino">Destino</string>
     <string name="text_valor">Valor</string>
     <string name="text_generar">Generar</string>
+    <string name="text_buscando_impresora">Buscando impresoras...</string>
 
 </resources>

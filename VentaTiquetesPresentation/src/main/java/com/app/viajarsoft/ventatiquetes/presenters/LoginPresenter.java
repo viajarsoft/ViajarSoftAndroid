@@ -52,7 +52,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         try {
             UsuarioResponse usuarioResponse = securityBL.login(usuarioRequest);
             getView().saveToken(usuarioResponse.getToken());
-            getView().startLanding(usuarioResponse);
+            getView().startLanding(usuarioResponse,usuarioRequest.getUsuario());
         } catch (RepositoryError repositoryError) {
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
         } finally {

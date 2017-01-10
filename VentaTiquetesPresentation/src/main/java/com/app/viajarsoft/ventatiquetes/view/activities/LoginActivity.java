@@ -70,9 +70,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
     }
 
     @Override
-    public void startLanding(UsuarioResponse usuarioResponse) {
+    public void startLanding(UsuarioResponse usuarioResponse, String usuario) {
         Intent intent = new Intent(LoginActivity.this, LandingActivity.class);
         intent.putExtra(IConstants.USUARIO, usuarioResponse);
+        intent.putExtra(IConstants.CODIGOUSUARIO,usuario);
         startActivity(intent);
     }
 }
