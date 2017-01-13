@@ -29,5 +29,6 @@
     <string name="text_valor">Valor</string>
     <string name="text_generar">Generar</string>
     <string name="text_buscando_impresora">Buscando impresoras...</string>
+    <string name="text_usuario">Usuario</string>
 
 </resources>
