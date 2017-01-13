@@ -3,11 +3,6 @@ package com.app.viajarsoft.ventatiquetes.view.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.app.viajarsoft.ventatiquetes.R;
@@ -15,7 +10,7 @@ import com.app.viajarsoft.ventatiquetes.utilities.helpers.AppInformation;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.IAppInformation;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     private TextView splash_tvAppVersion;
 

@@ -10,6 +10,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TestFairy.begin(this, "9cfa7e8493314cae6d7d6265cff0399be9cb4b15");
     }
 }
