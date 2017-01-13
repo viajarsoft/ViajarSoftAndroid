@@ -25,7 +25,7 @@
                 android:id="@+id/login_etCorreoElectronico"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_correo_electronico"
+                android:hint="@string/text_usuario"
                 android:inputType="textPersonName"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
