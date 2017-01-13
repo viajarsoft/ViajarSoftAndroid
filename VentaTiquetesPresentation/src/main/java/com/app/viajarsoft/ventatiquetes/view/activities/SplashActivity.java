@@ -52,4 +52,7 @@ public class SplashActivity extends AppCompatActivity {
         splash_tvAppVersion = (TextView) findViewById(R.id.splash_tvAppVersion);
     }
 
+    @Override
+    public void onBackPressed() {
+    }
 }
