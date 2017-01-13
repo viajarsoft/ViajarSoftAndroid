@@ -54,4 +54,5 @@ public interface IConstants {
 
     int NOT_FOUND_ERROR_CODE = 404;
     String SELECT = "Seleccione...";
+    long POST_DELAY_TIME = 2500;
 }
