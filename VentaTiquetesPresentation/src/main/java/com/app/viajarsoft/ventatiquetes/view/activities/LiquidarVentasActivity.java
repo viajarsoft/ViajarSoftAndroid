@@ -46,7 +46,7 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
 
     private void loadListener() {
 
-       /* liquidar_btnLiquidar.setOnClickListener(new View.OnClickListener() {
+        liquidar_btnLiquidar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Liquidacion liquidacion = new Liquidacion();
@@ -56,7 +56,7 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
                 liquidacion.setCodigoUsuario(usuario);
                 getPresenter().validateInternetToGetLiquidation(liquidacion);
             }
-        });*/
+        });
     }
 
     private void loadViews() {

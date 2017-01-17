@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Window;
 import android.widget.Toast;
@@ -33,12 +34,12 @@ import java.util.List;
 public class ImpresionActivity extends AppCompatActivity implements DiscoveryHandler {
 
 
-    protected List<String> discoveredPrinters = null;
     private ImpresionAdapter impresionAdapter;
     private RecyclerView impresion_rvList;
     private String zlpPrint;
     private boolean comenzar;
     private ProgressDialog progressDialog;
+    private RecyclerView.LayoutManager layoutManager;
     private ICustomSharedPreferences customSharedPreferences;
     private IImpresionZpl impresionZpl;
 
@@ -57,7 +58,9 @@ public class ImpresionActivity extends AppCompatActivity implements DiscoveryHan
         getDataIntent();
         this.customSharedPreferences = new CustomSharedPreferences(this);
         impresion_rvList = (RecyclerView) findViewById(R.id.impresion_rvList);
-        impresion_rvList.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        impresion_rvList.setLayoutManager(layoutManager);
+        //impresion_rvList.setHasFixedSize(true);
         impresion_rvList.setAdapter(impresionAdapter);
         comenzarBusqueda();
     }
@@ -86,7 +89,12 @@ public class ImpresionActivity extends AppCompatActivity implements DiscoveryHan
             @Override
             public void onItemClick(DiscoveredPrinterBluetooth item) {
                 customSharedPreferences.addString(IConstants.ADDRESSMAC, item.address);
-                impresionZpl.printZpl(zlpPrint, customSharedPreferences.getString(IConstants.ADDRESSMAC));
+                if(zlpPrint != null){
+                    impresionZpl.printZpl(zlpPrint, customSharedPreferences.getString(IConstants.ADDRESSMAC));
+                }else{
+                    Toast.makeText(ImpresionActivity.this, "Impresora guardada con éxito",Toast.LENGTH_LONG);
+                }
+
             }
         });
     }

@@ -194,7 +194,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
                 
                 String zplTiquete = tiquete.getZplTiquete().toString();
                 try {
-                    String bt_printer = "ac:3f:a4:47:ba:9b";
+                    String bt_printer = "ac:3f:a4:5b:ee:84";
                     // Instantiate insecure connection for given Bluetooth&reg; MAC Address.
                     Connection thePrinterConn = new BluetoothConnectionInsecure(bt_printer);
 
