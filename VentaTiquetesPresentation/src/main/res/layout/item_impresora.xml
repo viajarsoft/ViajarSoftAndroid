@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
 
@@ -16,20 +17,22 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="left|end"
+                android:drawableTop="@drawable/ic_keyboard_arrow_right_black_24dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
             <TextView
                 android:id="@+id/itemImpresora_tvMac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="mac"
+                android:textColor="@color/colorBlack"
                 android:textStyle="bold" />
-
-
-
-
-
 
         </LinearLayout>
 
@@ -45,18 +48,13 @@
                 android:id="@+id/itemImpresora_tvNombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="nombre"
+                android:textColor="@color/colorBlack"
                 android:textStyle="bold" />
 
 
         </LinearLayout>
 
-
-
-
     </LinearLayout>
-
 
     <View
         android:layout_width="match_parent"

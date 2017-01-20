@@ -6,7 +6,7 @@ import com.app.viajarsoft.ventatiquetes.helpers.ImpresionZpl;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.ICustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.ViajeBL;
@@ -27,33 +27,33 @@ public class LiquidarVentasPresenter extends BasePresenter<ILiquidarVentasView> 
         impresionZpl = new ImpresionZpl();
     }
 
-    public void validateInternetToGetLiquidation(Liquidacion liquidacion) {
+    public void validateInternetToGetLiquidation(LiquidacionVentas liquidacionVentas) {
         if(getValidateInternet().isConnected()){
-            createThreadToGetLiquidation(liquidacion);
+            createThreadToGetLiquidation(liquidacionVentas);
         }else{
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
         }
     }
 
-    public void createThreadToGetLiquidation(final Liquidacion liquidacion) {
+    public void createThreadToGetLiquidation(final LiquidacionVentas liquidacionVentas) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                getLiquidation(liquidacion);
+                getLiquidation(liquidacionVentas);
             }
         });
         thread.start();
     }
 
-    public void getLiquidation(Liquidacion liquidacion) {
+    public void getLiquidation(LiquidacionVentas liquidacionVentas) {
 
         try {
-            ResumenLiquidacionImpresion  resumenLiquidacionImpresion = viajeBL.getLiquidation(liquidacion);
+            ResumenLiquidacionImpresion  resumenLiquidacionImpresion = viajeBL.getLiquidation(liquidacionVentas);
             String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
             if(addressMac != null && !addressMac.isEmpty()){
-                impresionZpl.printZpl(resumenLiquidacionImpresion.getZplResumen(), addressMac);
+                impresionZpl.printZpl(resumenLiquidacionImpresion.getLiquidacion().getZplResumen(), addressMac);
             }else{
-             getView().intentToImpresionActivity(resumenLiquidacionImpresion.getZplResumen());
+             getView().intentToImpresionActivity(resumenLiquidacionImpresion.getLiquidacion().getZplResumen());
             }
         } catch (RepositoryError repositoryError) {
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());

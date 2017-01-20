@@ -2,11 +2,10 @@ package com.app.viajarsoft.ventatiquetes.viaje;
 
 import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.presenters.LiquidarVentasPresenter;
-import com.app.viajarsoft.ventatiquetes.presenters.VenderPasajesPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.IValidateInternet;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.IViajeRepository;
 import com.app.viajarsoft.ventatiquetesdomain.viaje.ViajeBL;
@@ -49,45 +48,45 @@ public class LiquidarVentasPresenterTest {
         liquidarVentasPresenter.inject(liquidarVentasView, validateInternet);
     }
 
-    private Liquidacion getLiquidacion() {
-        Liquidacion liquidacion = new Liquidacion();
-        liquidacion.setCodigoOficina("1122");
-        liquidacion.setFechaVenta("02-10-2016");
-        liquidacion.setCodigoTaquilla("002");
-        liquidacion.setCodigoUsuario("0378");
+    private LiquidacionVentas getLiquidacion() {
+        LiquidacionVentas liquidacionVentas = new LiquidacionVentas();
+        liquidacionVentas.setCodigoOficina("1122");
+        liquidacionVentas.setFechaVenta("02-10-2016");
+        liquidacionVentas.setCodigoTaquilla("002");
+        liquidacionVentas.setCodigoUsuario("0378");
 
-        return liquidacion;
+        return liquidacionVentas;
     }
 
     @Test
     public void methodValidateInternetWithoutConnectionShouldShowAlertDialog() {
-        Liquidacion liquidacion = getLiquidacion();
+        LiquidacionVentas liquidacionVentas = getLiquidacion();
 
         when(validateInternet.isConnected()).thenReturn(false);
 
-        liquidarVentasPresenter.validateInternetToGetLiquidation(liquidacion);
+        liquidarVentasPresenter.validateInternetToGetLiquidation(liquidacionVentas);
 
         verify(liquidarVentasView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
-        verify(liquidarVentasPresenter, never()).createThreadToGetLiquidation(liquidacion);
+        verify(liquidarVentasPresenter, never()).createThreadToGetLiquidation(liquidacionVentas);
     }
 
     @Test
     public void methodValidateInternetSummaryWithConnectionShouldCallCreateThreadTGetSummaryLiquidation(){
-        Liquidacion liquidacion = getLiquidacion();
+        LiquidacionVentas liquidacionVentas = getLiquidacion();
         when(validateInternet.isConnected()).thenReturn(true);
 
-        liquidarVentasPresenter.validateInternetToGetLiquidation(liquidacion);
+        liquidarVentasPresenter.validateInternetToGetLiquidation(liquidacionVentas);
 
-        verify(liquidarVentasPresenter).createThreadToGetLiquidation(liquidacion);
+        verify(liquidarVentasPresenter).createThreadToGetLiquidation(liquidacionVentas);
         verify(liquidarVentasView, never()).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
     }
 
     @Test
     public void methodcreateThreadToGetLiquidationShouldCallGetLiquidationInBL() throws RepositoryError {
-        Liquidacion liquidacion = getLiquidacion();
-        liquidarVentasPresenter.createThreadToGetLiquidation(liquidacion);
+        LiquidacionVentas liquidacionVentas = getLiquidacion();
+        liquidarVentasPresenter.createThreadToGetLiquidation(liquidacionVentas);
 
-        verify(viajeBL).getLiquidation(liquidacion);
+        verify(viajeBL).getLiquidation(liquidacionVentas);
 
     }
 
@@ -95,11 +94,11 @@ public class LiquidarVentasPresenterTest {
     public void methodoGetSummaryLiquidationShouldShowAlertDialogIfAnErrorOcurred() throws RepositoryError {
         RepositoryError repositoryError = new RepositoryError(IConstants.DEFAUL_ERROR);
         repositoryError.setIdError(0);
-        Liquidacion liquidacion = getLiquidacion();
+        LiquidacionVentas liquidacionVentas = getLiquidacion();
 
-        when(viajeRepository.getLiquidation(liquidacion)).thenThrow(repositoryError);
+        when(viajeRepository.getLiquidation(liquidacionVentas)).thenThrow(repositoryError);
 
-        liquidarVentasPresenter.getLiquidation(liquidacion);
+        liquidarVentasPresenter.getLiquidation(liquidacionVentas);
 
         verify(liquidarVentasView).showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
         verify(liquidarVentasView).dismissProgressDialog();

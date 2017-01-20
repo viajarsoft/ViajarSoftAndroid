@@ -2,14 +2,13 @@ package com.app.viajarsoft.ventatiquetesdomain.viaje;
 
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenVentasPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.TipoTiquete;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Tiquete;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
 
 import java.util.List;
@@ -30,5 +29,5 @@ public interface IViajeRepository {
 
     ResumenVentasPorLiquidar getSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) throws RepositoryError;
 
-    ResumenLiquidacionImpresion getLiquidation(Liquidacion liquidacion) throws RepositoryError;
+    ResumenLiquidacionImpresion getLiquidation(LiquidacionVentas liquidacionVentas) throws RepositoryError;
 }

@@ -1,7 +1,7 @@
 package com.app.viajarsoft.ventatiquetes.repositories.viaje;
 
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
-import com.app.viajarsoft.ventatiquetes.dto.LiquidacionDTO;
+import com.app.viajarsoft.ventatiquetes.dto.LiquidacionVentasDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
@@ -15,7 +15,7 @@ import com.app.viajarsoft.ventatiquetes.utilities.helpers.ICustomSharedPreferenc
 import com.app.viajarsoft.ventatiquetes.utilities.services.ServicesFactory;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
@@ -98,10 +98,10 @@ public class ViajeRepository implements IViajeRepository {
     }
 
     @Override
-    public ResumenLiquidacionImpresion getLiquidation(Liquidacion liquidacion) throws RepositoryError {
+    public ResumenLiquidacionImpresion getLiquidation(LiquidacionVentas liquidacionVentas) throws RepositoryError {
        try{
-           LiquidacionDTO liquidacionDTO = Mapper.convertLiquidationDomainToDTO(liquidacion);
-           ResumenLiquidacionImpresionDTO resumenLiquidacionImpresionDTO = viajeServices.getLiquidation(liquidacionDTO);
+           LiquidacionVentasDTO liquidacionVentasDTO = Mapper.convertLiquidationDomainToDTO(liquidacionVentas);
+           ResumenLiquidacionImpresionDTO resumenLiquidacionImpresionDTO = viajeServices.getLiquidation(liquidacionVentasDTO);
            return Mapper.convertResumenLiquidacionImpresionDTOToDomain(resumenLiquidacionImpresionDTO);
        }catch (RetrofitError retrofitError){
            throw Mapper.convertRetrofitErrorToRepositoryError(retrofitError);

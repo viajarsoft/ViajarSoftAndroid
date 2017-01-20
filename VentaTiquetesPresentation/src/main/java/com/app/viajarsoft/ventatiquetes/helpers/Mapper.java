@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.DestinationPriceDTO;
 import com.app.viajarsoft.ventatiquetes.dto.LiquidacionDTO;
+import com.app.viajarsoft.ventatiquetes.dto.LiquidacionVentasDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ResumenLiquidacionDTO;
@@ -24,6 +25,7 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DTO.ErrorDTO;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
@@ -244,22 +246,30 @@ public class Mapper {
         return ventaPorLiquidar;
     }
 
-    public static LiquidacionDTO convertLiquidationDomainToDTO(Liquidacion liquidacion){
-        LiquidacionDTO liquidacionDTO = new LiquidacionDTO();
-        liquidacionDTO.setCodigoOficina(liquidacion.getCodigoOficina());
-        liquidacionDTO.setCodigoUsuario(liquidacion.getCodigoUsuario());
-        liquidacionDTO.setFechaVenta(liquidacion.getFechaVenta());
-        liquidacionDTO.setCodigoTaquilla(liquidacion.getCodigoTaquilla());
+    public static LiquidacionVentasDTO convertLiquidationDomainToDTO(LiquidacionVentas liquidacionVentas){
+        LiquidacionVentasDTO liquidacionVentasDTO = new LiquidacionVentasDTO();
+        liquidacionVentasDTO.setCodigoOficina(liquidacionVentas.getCodigoOficina());
+        liquidacionVentasDTO.setCodigoUsuario(liquidacionVentas.getCodigoUsuario());
+        liquidacionVentasDTO.setFechaVenta(liquidacionVentas.getFechaVenta());
+        liquidacionVentasDTO.setCodigoTaquilla(liquidacionVentas.getCodigoTaquilla());
 
-        return liquidacionDTO;
+        return liquidacionVentasDTO;
     }
 
     public static ResumenLiquidacionImpresion convertResumenLiquidacionImpresionDTOToDomain(ResumenLiquidacionImpresionDTO resumenLiquidacionImpresionDTO){
         ResumenLiquidacionImpresion resumenLiquidacionImpresion = new ResumenLiquidacionImpresion();
 
-        resumenLiquidacionImpresion.setZplResumen(resumenLiquidacionImpresionDTO.getZplResumen());
+        resumenLiquidacionImpresion.setLiquidacion(convertResumenLiquidacionImpresionZplDTOToDomain(resumenLiquidacionImpresionDTO.getLiquidacion()));
 
         return resumenLiquidacionImpresion;
     }
+
+    private static Liquidacion convertResumenLiquidacionImpresionZplDTOToDomain(LiquidacionDTO liquidacionDTO) {
+        Liquidacion liquidacion = new Liquidacion();
+        liquidacion.setZplResumen(liquidacionDTO.getZplResumen());
+
+        return liquidacion;
+    }
+
 
 }

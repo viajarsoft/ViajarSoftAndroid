@@ -9,13 +9,11 @@ import android.widget.TextView;
 
 import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.dependency_injection.DomainModule;
-import com.app.viajarsoft.ventatiquetes.presenters.LandingPresenter;
 import com.app.viajarsoft.ventatiquetes.presenters.LiquidarVentasPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 
 public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter> implements ILiquidarVentasView {
@@ -49,12 +47,12 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         liquidar_btnLiquidar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Liquidacion liquidacion = new Liquidacion();
-                liquidacion.setCodigoOficina(ventaPorLiquidar.getCodigoOficina());
-                liquidacion.setCodigoTaquilla(ventaPorLiquidar.getCodigoTaquilla());
-                liquidacion.setFechaVenta(ventaPorLiquidar.getFechaVenta());
-                liquidacion.setCodigoUsuario(usuario);
-                getPresenter().validateInternetToGetLiquidation(liquidacion);
+                LiquidacionVentas liquidacionVentas = new LiquidacionVentas();
+                liquidacionVentas.setCodigoOficina(ventaPorLiquidar.getCodigoOficina());
+                liquidacionVentas.setCodigoTaquilla(ventaPorLiquidar.getCodigoTaquilla());
+                liquidacionVentas.setFechaVenta(ventaPorLiquidar.getFechaVenta());
+                liquidacionVentas.setCodigoUsuario(usuario);
+                getPresenter().validateInternetToGetLiquidation(liquidacionVentas);
             }
         });
     }

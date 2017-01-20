@@ -1,7 +1,7 @@
 package com.app.viajarsoft.ventatiquetes.viaje;
 
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
@@ -232,34 +232,34 @@ public class ViajeBLTest {
     public void getLiquidationWitchEntityEmptyShouldReturnAnException() throws RepositoryError {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(IConstants.EMPTY_PARAMETERS);
-        Liquidacion liquidacion = new Liquidacion();
-        liquidacion.setCodigoOficina("");
-        liquidacion.setFechaVenta("");
-        liquidacion.setCodigoTaquilla("");
-        liquidacion.setCodigoUsuario("");
+        LiquidacionVentas liquidacionVentas = new LiquidacionVentas();
+        liquidacionVentas.setCodigoOficina("");
+        liquidacionVentas.setFechaVenta("");
+        liquidacionVentas.setCodigoTaquilla("");
+        liquidacionVentas.setCodigoUsuario("");
 
-        viajeBL.getLiquidation(liquidacion);
+        viajeBL.getLiquidation(liquidacionVentas);
     }
 
     @Test
     public void getLiquidationWitchNullParametersShouldReturnAnException() throws RepositoryError {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage(IConstants.NULL_PARAMETERS);
-        Liquidacion liquidacion = new Liquidacion();
-        liquidacion.setCodigoOficina(null);
-        liquidacion.setFechaVenta(null);
-        liquidacion.setCodigoTaquilla(null);
-        liquidacion.setCodigoUsuario(null);
+        LiquidacionVentas liquidacionVentas = new LiquidacionVentas();
+        liquidacionVentas.setCodigoOficina(null);
+        liquidacionVentas.setFechaVenta(null);
+        liquidacionVentas.setCodigoTaquilla(null);
+        liquidacionVentas.setCodigoUsuario(null);
 
-        viajeBL.getLiquidation(liquidacion);
+        viajeBL.getLiquidation(liquidacionVentas);
     }
 
     public void getLiquidationWithCorrectParametersShouldCallgetLiquidationInRepository() throws RepositoryError {
-        Liquidacion liquidacion = getLiquidacion();
+        LiquidacionVentas liquidacionVentas = getLiquidacion();
 
-        viajeBL.getLiquidation(liquidacion);
+        viajeBL.getLiquidation(liquidacionVentas);
 
-        verify(viajeRepository).getLiquidation(liquidacion);
+        verify(viajeRepository).getLiquidation(liquidacionVentas);
     }
 
 
@@ -277,13 +277,13 @@ public class ViajeBLTest {
         return viaje;
     }
 
-    private Liquidacion getLiquidacion() {
-        Liquidacion liquidacion = new Liquidacion();
-        liquidacion.setCodigoOficina("1122");
-        liquidacion.setFechaVenta("02-10-2016");
-        liquidacion.setCodigoTaquilla("002");
-        liquidacion.setCodigoUsuario("0378");
+    private LiquidacionVentas getLiquidacion() {
+        LiquidacionVentas liquidacionVentas = new LiquidacionVentas();
+        liquidacionVentas.setCodigoOficina("1122");
+        liquidacionVentas.setFechaVenta("02-10-2016");
+        liquidacionVentas.setCodigoTaquilla("002");
+        liquidacionVentas.setCodigoUsuario("0378");
 
-        return liquidacion;
+        return liquidacionVentas;
     }
 }

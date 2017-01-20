@@ -1,5 +1,6 @@
 package com.app.viajarsoft.ventatiquetes.view.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +14,11 @@ import android.widget.Toast;
 
 import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.dependency_injection.DomainModule;
+import com.app.viajarsoft.ventatiquetes.helpers.IImpresionZpl;
+import com.app.viajarsoft.ventatiquetes.helpers.ImpresionZpl;
 import com.app.viajarsoft.ventatiquetes.presenters.VenderPasajesPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
+import com.app.viajarsoft.ventatiquetes.utilities.helpers.ICustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.adapters.PrecioDestinoRecyclerViewAdapter;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.IVenderPasajesView;
@@ -46,6 +50,9 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
     private String codigoRutaSelected = IConstants.EMPTY_STRING;
     private String tipoTiqueteSelected = IConstants.EMPTY_STRING;
 
+    private ICustomSharedPreferences customSharedPreferences;
+    private IImpresionZpl impresionZpl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +60,8 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         setPresenter(new VenderPasajesPresenter(DomainModule.getViajeBLInstance(new CustomSharedPreferences(this))));
         getPresenter().inject(this, getValidateInternet());
         createProgressDialog();
+        this.customSharedPreferences = new CustomSharedPreferences(this);
+        this.impresionZpl = new ImpresionZpl();
         this.usuarioResponse = (UsuarioResponse) getIntent().getSerializableExtra(IConstants.USUARIO);
         this.bussesAndRoutes = (BussesAndRoutes) getIntent().getSerializableExtra(IConstants.BUSSES_AND_ROUTES);
         loadToolbar();
@@ -186,42 +195,17 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
 
     @Override
     public void printTicketOnUiThread(final Tiquete tiquete) {
+        String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
+        if (addressMac != null && !addressMac.isEmpty()) {
+            impresionZpl.printZpl(tiquete.getZplTiquete(), addressMac);
+        } else {
+            intentToImpresionActivity(tiquete.getZplTiquete());
+        }
+    }
 
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                
-                String zplTiquete = tiquete.getZplTiquete().toString();
-                try {
-                    String bt_printer = "ac:3f:a4:5b:ee:84";
-                    // Instantiate insecure connection for given Bluetooth&reg; MAC Address.
-                    Connection thePrinterConn = new BluetoothConnectionInsecure(bt_printer);
-
-                    // Initialize
-                    if (Looper.myLooper() == null) {
-                        Looper.prepare();
-                    }
-
-                    // Open the connection - physical connection is established here.
-                    thePrinterConn.open();
-
-                    // Send the data to printer as a byte array.
-                    thePrinterConn.write(zplTiquete.getBytes());
-
-                    // Make sure the data got to the printer before closing the connection
-                    Thread.sleep(500);
-
-                    // Close the insecure connection to release resources.
-                    thePrinterConn.close();
-
-                    Looper.myLooper().quit();
-                } catch (Exception e) {
-                    // Handle communications error here.
-                    e.printStackTrace();
-                }
-            }
-        });
+    public void intentToImpresionActivity(String zplResumen) {
+        Intent intent = new Intent(VenderPasajesActivity.this, ImpresionActivity.class);
+        intent.putExtra(IConstants.IMPRESION, zplResumen);
     }
 
 

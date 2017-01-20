@@ -2,7 +2,7 @@ package com.app.viajarsoft.ventatiquetes.repositories.viaje;
 
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
+import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacionImpresion;
@@ -45,7 +45,7 @@ public class ViajeRepositoryTest implements IViajeRepository {
     }
 
     @Override
-    public ResumenLiquidacionImpresion getLiquidation(Liquidacion liquidacion) {
+    public ResumenLiquidacionImpresion getLiquidation(LiquidacionVentas liquidacionVentas) {
         return null;
     }
 }
