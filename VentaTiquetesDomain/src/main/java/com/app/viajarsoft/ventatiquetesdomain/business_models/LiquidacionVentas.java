@@ -10,6 +10,7 @@ public class LiquidacionVentas {
     private String codigoTaquilla;
     private String fechaVenta;
     private String codigoUsuario;
+    private String tipoVenta;
 
     public String getCodigoOficina() {
         return codigoOficina;
@@ -19,12 +20,20 @@ public class LiquidacionVentas {
         this.codigoOficina = codigoOficina;
     }
 
-    public String getCodigoTaquilla() {
-        return codigoTaquilla;
+    public String getTipoVenta() {
+        return tipoVenta;
     }
 
-    public void setCodigoTaquilla(String codigoTaquilla) {
-        this.codigoTaquilla = codigoTaquilla;
+    public void setTipoVenta(String tipoVenta) {
+        this.tipoVenta = tipoVenta;
+    }
+
+    public String getCodigoUsuario() {
+        return codigoUsuario;
+    }
+
+    public void setCodigoUsuario(String codigoUsuario) {
+        this.codigoUsuario = codigoUsuario;
     }
 
     public String getFechaVenta() {
@@ -35,11 +44,11 @@ public class LiquidacionVentas {
         this.fechaVenta = fechaVenta;
     }
 
-    public String getCodigoUsuario() {
-        return codigoUsuario;
+    public String getCodigoTaquilla() {
+        return codigoTaquilla;
     }
 
-    public void setCodigoUsuario(String codigoUsuario) {
-        this.codigoUsuario = codigoUsuario;
+    public void setCodigoTaquilla(String codigoTaquilla) {
+        this.codigoTaquilla = codigoTaquilla;
     }
 }

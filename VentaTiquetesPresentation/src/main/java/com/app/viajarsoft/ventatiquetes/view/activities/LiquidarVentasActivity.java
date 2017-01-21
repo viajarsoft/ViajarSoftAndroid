@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.dependency_injection.DomainModule;
+import com.app.viajarsoft.ventatiquetes.helpers.IImpresionZpl;
+import com.app.viajarsoft.ventatiquetes.helpers.ImpresionZpl;
 import com.app.viajarsoft.ventatiquetes.presenters.LiquidarVentasPresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
+import com.app.viajarsoft.ventatiquetes.utilities.helpers.ICustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
@@ -24,6 +27,8 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     private Button liquidar_btnLiquidar;
     private String usuario;
     private VentaPorLiquidar ventaPorLiquidar;
+    private IImpresionZpl impresionZpl;
+    private ICustomSharedPreferences customSharedPreferences;
 
 
 
@@ -37,6 +42,8 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         createProgressDialog();
         this.usuario = getIntent().getStringExtra(IConstants.CODIGOUSUARIO);
         this.ventaPorLiquidar = (VentaPorLiquidar) getIntent().getSerializableExtra(IConstants.SUMMARY_LIQUIDATION);
+        customSharedPreferences = new CustomSharedPreferences(LiquidarVentasActivity.this);
+        impresionZpl = new ImpresionZpl();
         loadViews();
         loadListener();
         setInfo();
@@ -52,6 +59,7 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
                 liquidacionVentas.setCodigoTaquilla(ventaPorLiquidar.getCodigoTaquilla());
                 liquidacionVentas.setFechaVenta(ventaPorLiquidar.getFechaVenta());
                 liquidacionVentas.setCodigoUsuario(usuario);
+                liquidacionVentas.setTipoVenta("1024");
                 getPresenter().validateInternetToGetLiquidation(liquidacionVentas);
             }
         });
@@ -88,7 +96,12 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
 
     @Override
     public void intentToImpresionActivity(String zplResumen) {
-        Intent intent = new Intent(LiquidarVentasActivity.this, ImpresionActivity.class);
-        intent.putExtra(IConstants.IMPRESION, zplResumen);
+        String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
+        if(addressMac != null && !addressMac.isEmpty()) {
+            impresionZpl.printZpl(zplResumen, addressMac);
+        }else{
+            Intent intent = new Intent(LiquidarVentasActivity.this, ImpresionActivity.class);
+            intent.putExtra(IConstants.IMPRESION, zplResumen);
+        }
     }
 }

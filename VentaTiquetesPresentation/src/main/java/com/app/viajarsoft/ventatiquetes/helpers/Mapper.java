@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.app.viajarsoft.ventatiquetes.dto.BussesAndRoutesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.DestinationPriceDTO;
-import com.app.viajarsoft.ventatiquetes.dto.LiquidacionDTO;
 import com.app.viajarsoft.ventatiquetes.dto.LiquidacionVentasDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListDestinationPricesDTO;
 import com.app.viajarsoft.ventatiquetes.dto.ListTipoTiquetesDTO;
@@ -24,7 +23,6 @@ import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.BussesAndRoutes;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DTO.ErrorDTO;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.DestinationPrice;
-import com.app.viajarsoft.ventatiquetesdomain.business_models.Liquidacion;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.LiquidacionVentas;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
@@ -252,6 +250,7 @@ public class Mapper {
         liquidacionVentasDTO.setCodigoUsuario(liquidacionVentas.getCodigoUsuario());
         liquidacionVentasDTO.setFechaVenta(liquidacionVentas.getFechaVenta());
         liquidacionVentasDTO.setCodigoTaquilla(liquidacionVentas.getCodigoTaquilla());
+        liquidacionVentasDTO.setTipoVenta(liquidacionVentas.getTipoVenta());
 
         return liquidacionVentasDTO;
     }
@@ -259,17 +258,7 @@ public class Mapper {
     public static ResumenLiquidacionImpresion convertResumenLiquidacionImpresionDTOToDomain(ResumenLiquidacionImpresionDTO resumenLiquidacionImpresionDTO){
         ResumenLiquidacionImpresion resumenLiquidacionImpresion = new ResumenLiquidacionImpresion();
 
-        resumenLiquidacionImpresion.setLiquidacion(convertResumenLiquidacionImpresionZplDTOToDomain(resumenLiquidacionImpresionDTO.getLiquidacion()));
-
+         resumenLiquidacionImpresion.setZplResumen(resumenLiquidacionImpresionDTO.getZplResumen());
         return resumenLiquidacionImpresion;
     }
-
-    private static Liquidacion convertResumenLiquidacionImpresionZplDTOToDomain(LiquidacionDTO liquidacionDTO) {
-        Liquidacion liquidacion = new Liquidacion();
-        liquidacion.setZplResumen(liquidacionDTO.getZplResumen());
-
-        return liquidacion;
-    }
-
-
 }

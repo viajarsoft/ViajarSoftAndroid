@@ -18,13 +18,10 @@ import com.app.viajarsoft.ventatiquetesdomain.viaje.ViajeBL;
 public class LiquidarVentasPresenter extends BasePresenter<ILiquidarVentasView> {
 
     ViajeBL viajeBL;
-    IImpresionZpl impresionZpl;
-    ICustomSharedPreferences customSharedPreferences;
 
 
     public LiquidarVentasPresenter(ViajeBL viajeBL) {
         this.viajeBL = viajeBL;
-        impresionZpl = new ImpresionZpl();
     }
 
     public void validateInternetToGetLiquidation(LiquidacionVentas liquidacionVentas) {
@@ -36,6 +33,7 @@ public class LiquidarVentasPresenter extends BasePresenter<ILiquidarVentasView> 
     }
 
     public void createThreadToGetLiquidation(final LiquidacionVentas liquidacionVentas) {
+        getView().showProgressDialog(R.string.text_please_wait);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -49,12 +47,7 @@ public class LiquidarVentasPresenter extends BasePresenter<ILiquidarVentasView> 
 
         try {
             ResumenLiquidacionImpresion  resumenLiquidacionImpresion = viajeBL.getLiquidation(liquidacionVentas);
-            String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
-            if(addressMac != null && !addressMac.isEmpty()){
-                impresionZpl.printZpl(resumenLiquidacionImpresion.getLiquidacion().getZplResumen(), addressMac);
-            }else{
-             getView().intentToImpresionActivity(resumenLiquidacionImpresion.getLiquidacion().getZplResumen());
-            }
+             getView().intentToImpresionActivity(resumenLiquidacionImpresion.getZplResumen());
         } catch (RepositoryError repositoryError) {
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
         }finally {

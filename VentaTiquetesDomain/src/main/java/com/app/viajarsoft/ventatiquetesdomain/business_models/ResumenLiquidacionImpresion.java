@@ -6,14 +6,14 @@ package com.app.viajarsoft.ventatiquetesdomain.business_models;
 
 public class ResumenLiquidacionImpresion {
 
-    private Liquidacion liquidacion;
+    private String ZplResumen;
 
-    public Liquidacion getLiquidacion() {
-        return liquidacion;
+    public String getZplResumen() {
+        return ZplResumen;
     }
 
-    public void setLiquidacion(Liquidacion liquidacion) {
-        this.liquidacion = liquidacion;
+    public void setZplResumen(String zplResumen) {
+        ZplResumen = zplResumen;
     }
 }
 

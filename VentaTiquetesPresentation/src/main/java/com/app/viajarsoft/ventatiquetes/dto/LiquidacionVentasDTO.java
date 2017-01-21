@@ -10,6 +10,7 @@ public class LiquidacionVentasDTO {
     private String CodigoTaquilla;
     private String FechaVenta;
     private String CodigoUsuario;
+    private String TipoVenta;
 
     public String getCodigoOficina() {
         return CodigoOficina;
@@ -19,12 +20,20 @@ public class LiquidacionVentasDTO {
         CodigoOficina = codigoOficina;
     }
 
-    public String getCodigoTaquilla() {
-        return CodigoTaquilla;
+    public String getTipoVenta() {
+        return TipoVenta;
     }
 
-    public void setCodigoTaquilla(String codigoTaquilla) {
-        CodigoTaquilla = codigoTaquilla;
+    public void setTipoVenta(String tipoVenta) {
+        TipoVenta = tipoVenta;
+    }
+
+    public String getCodigoUsuario() {
+        return CodigoUsuario;
+    }
+
+    public void setCodigoUsuario(String codigoUsuario) {
+        CodigoUsuario = codigoUsuario;
     }
 
     public String getFechaVenta() {
@@ -35,11 +44,11 @@ public class LiquidacionVentasDTO {
         FechaVenta = fechaVenta;
     }
 
-    public String getCodigoUsuario() {
-        return CodigoUsuario;
+    public String getCodigoTaquilla() {
+        return CodigoTaquilla;
     }
 
-    public void setCodigoUsuario(String codigoUsuario) {
-        CodigoUsuario = codigoUsuario;
+    public void setCodigoTaquilla(String codigoTaquilla) {
+        CodigoTaquilla = codigoTaquilla;
     }
 }

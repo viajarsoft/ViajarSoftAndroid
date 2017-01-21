@@ -6,13 +6,13 @@ package com.app.viajarsoft.ventatiquetes.dto;
 
 public class ResumenLiquidacionImpresionDTO {
 
-    private LiquidacionDTO Liquidacion;
+    private String ZplResumen;
 
-    public LiquidacionDTO getLiquidacion() {
-        return Liquidacion;
+    public String getZplResumen() {
+        return ZplResumen;
     }
 
-    public void setLiquidacion(LiquidacionDTO liquidacion) {
-        Liquidacion = liquidacion;
+    public void setZplResumen(String zplResumen) {
+        ZplResumen = zplResumen;
     }
 }
