@@ -1,8 +1,10 @@
 package com.app.viajarsoft.ventatiquetes.view.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -68,7 +70,38 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         loadViews();
         loadBussesSpinner();
         loadRoutesSpinner();
+        validateMacAddress();
     }
+
+
+    private void validateMacAddress() {
+        String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
+        if (addressMac == null || addressMac.isEmpty()) {
+            showAlertDialog(R.string.title_user, R.string.text_user);
+        }
+    }
+
+    public void showAlertDialog(int title, int message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.text_aceptar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onBackPressed();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+
 
     private void loadViews() {
         venderPasajes_spinnerTipoBus = (Spinner) findViewById(R.id.venderPasajes_spinnerTipoBus);

@@ -37,5 +37,8 @@
     <string name="title_informacion">Información</string>
     <string name="text_item_impresion">Se ha configurado la impresora</string>
     <string name="text_liquidar">Liquidar</string>
+    <string name="title_user">Apreciado usuario</string>
+    <string name="text_user">Debe configurar la impresora</string>
+    <string name="title_cancel">Cancelar</string>
 
 </resources>

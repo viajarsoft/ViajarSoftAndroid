@@ -47,7 +47,7 @@ public class LiquidarVentasPresenter extends BasePresenter<ILiquidarVentasView> 
 
         try {
             ResumenLiquidacionImpresion  resumenLiquidacionImpresion = viajeBL.getLiquidation(liquidacionVentas);
-             getView().intentToImpresionActivity(resumenLiquidacionImpresion.getZplResumen());
+             getView().printZplResumen(resumenLiquidacionImpresion.getZplResumen());
         } catch (RepositoryError repositoryError) {
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
         }finally {

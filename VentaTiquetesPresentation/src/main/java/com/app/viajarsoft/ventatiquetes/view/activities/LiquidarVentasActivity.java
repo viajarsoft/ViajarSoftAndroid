@@ -1,7 +1,9 @@
 package com.app.viajarsoft.ventatiquetes.view.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
@@ -31,7 +33,6 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     private ICustomSharedPreferences customSharedPreferences;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,34 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         loadViews();
         loadListener();
         setInfo();
+        validateMacAddress();
+    }
+
+    private void validateMacAddress() {
+        String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
+        if (addressMac == null || addressMac.isEmpty()) {
+            showAlertDialog(R.string.title_user, R.string.text_user);
+        }
+    }
+
+    public void showAlertDialog(int title, int message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.text_aceptar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onBackPressed();
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton(R.string.title_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private void loadListener() {
@@ -74,7 +103,6 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     }
 
 
-
     private void loadToolbar() {
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_liquidar_ventas);
@@ -88,21 +116,15 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         });
     }
 
-    private void setInfo(){
+    private void setInfo() {
         liquidar_tvUsuario.setText(ventaPorLiquidar.getNombreTaquilla());
         liquidar_tvPasajesVendidos.setText(ventaPorLiquidar.getCantidad() + "");
         liquidar_tvValorTotal.setText(ventaPorLiquidar.getValorTiquete().toString());
     }
 
     @Override
-    public void intentToImpresionActivity(String zplResumen) {
+    public void printZplResumen(String zplResumen) {
         String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
-        if(addressMac != null && !addressMac.isEmpty()) {
-            impresionZpl.printZpl(zplResumen, addressMac);
-        }else{
-            Intent intent = new Intent(LiquidarVentasActivity.this, ImpresionActivity.class);
-            intent.putExtra(IConstants.IMPRESION, zplResumen);
-            startActivity(intent);
-        }
+        impresionZpl.printZpl(zplResumen, addressMac);
     }
 }
