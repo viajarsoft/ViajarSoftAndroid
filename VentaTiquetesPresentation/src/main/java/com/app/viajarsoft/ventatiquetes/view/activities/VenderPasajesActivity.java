@@ -206,6 +206,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
     public void intentToImpresionActivity(String zplResumen) {
         Intent intent = new Intent(VenderPasajesActivity.this, ImpresionActivity.class);
         intent.putExtra(IConstants.IMPRESION, zplResumen);
+        startActivity(intent);
     }
 
 

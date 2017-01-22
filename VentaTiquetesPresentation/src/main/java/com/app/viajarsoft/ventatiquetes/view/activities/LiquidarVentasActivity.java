@@ -102,6 +102,7 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         }else{
             Intent intent = new Intent(LiquidarVentasActivity.this, ImpresionActivity.class);
             intent.putExtra(IConstants.IMPRESION, zplResumen);
+            startActivity(intent);
         }
     }
 }
