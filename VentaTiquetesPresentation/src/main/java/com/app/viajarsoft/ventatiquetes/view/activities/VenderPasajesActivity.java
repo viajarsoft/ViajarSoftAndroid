@@ -231,8 +231,6 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
         if (addressMac != null && !addressMac.isEmpty()) {
             impresionZpl.printZpl(tiquete.getZplTiquete(), addressMac);
-        } else {
-            intentToImpresionActivity(tiquete.getZplTiquete());
         }
     }
 
