@@ -127,11 +127,12 @@ public class ImpresionActivity extends BaseActivity<ImpresionPresenter> implemen
             @Override
             public void onItemClick(DiscoveredPrinterBluetooth item) {
                 customSharedPreferences.addString(IConstants.ADDRESSMAC, item.address);
+                onBackPressed();
                 if(zlpPrint != null){
                     impresionZpl.printZpl(zlpPrint, customSharedPreferences.getString(IConstants.ADDRESSMAC));
                 }else{
-                    onBackPressed();
-                    Toast.makeText(ImpresionActivity.this, R.string.text_item_impresion,Toast.LENGTH_LONG);
+
+                    Toast.makeText(ImpresionActivity.this, R.string.text_item_impresion,Toast.LENGTH_LONG).show();
                 }
 
             }
