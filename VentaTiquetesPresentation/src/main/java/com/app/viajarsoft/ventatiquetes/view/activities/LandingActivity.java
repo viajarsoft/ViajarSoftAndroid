@@ -1,5 +1,6 @@
 package com.app.viajarsoft.ventatiquetes.view.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -9,6 +10,7 @@ import android.view.View;
 import com.app.viajarsoft.ventatiquetes.R;
 import com.app.viajarsoft.ventatiquetes.dependency_injection.DomainModule;
 import com.app.viajarsoft.ventatiquetes.presenters.LandingPresenter;
+import com.app.viajarsoft.ventatiquetes.utilities.custom_controls.CustomAlertDialog;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.CustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILandingView;
@@ -17,13 +19,14 @@ import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion
 import com.app.viajarsoft.ventatiquetesdomain.business_models.UsuarioResponse;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.VentaPorLiquidar;
 
-public class LandingActivity extends BaseActivity<LandingPresenter> implements ILandingView{
+public class LandingActivity extends BaseActivity<LandingPresenter> implements ILandingView {
 
     private CardView landing_cvVenderPasajes;
     private CardView landing_cvLiquidarVentas;
     private CardView landing_cvImpresora;
     private String usuario;
     private UsuarioResponse usuarioResponse;
+    private CustomAlertDialog customAlertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
         setContentView(R.layout.activity_landing);
         setPresenter(new LandingPresenter(DomainModule.getViajeBLInstance(new CustomSharedPreferences(this))));
         getPresenter().inject(this, getValidateInternet());
+        this.customAlertDialog = new CustomAlertDialog(this);
         createProgressDialog();
         this.usuarioResponse = (UsuarioResponse) getIntent().getSerializableExtra(IConstants.USUARIO);
         this.usuario = getIntent().getStringExtra(IConstants.CODIGOUSUARIO);
@@ -56,7 +60,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LandingActivity.this, ImpresionActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, IConstants.DEFAUl_REQUEST_CODE);
             }
         });
     }
@@ -89,7 +93,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
     }
 
     private void loadToolbar() {
-        Toolbar toolbar = (Toolbar)this.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_viajar_soft);
         setSupportActionBar(toolbar);
     }
@@ -102,7 +106,7 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
                 Intent intent = new Intent(LandingActivity.this, VenderPasajesActivity.class);
                 intent.putExtra(IConstants.USUARIO, usuarioResponse);
                 intent.putExtra(IConstants.BUSSES_AND_ROUTES, bussesAndRoutes);
-                startActivity(intent);
+                startActivityForResult(intent, IConstants.DEFAUl_REQUEST_CODE);
             }
         });
     }
@@ -115,7 +119,24 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
                 Intent intent = new Intent(LandingActivity.this, LiquidarVentasActivity.class);
                 intent.putExtra(IConstants.CODIGOUSUARIO, usuario);
                 intent.putExtra(IConstants.SUMMARY_LIQUIDATION, ventaPorLiquidar);
-                startActivity(intent);
+                startActivityForResult(intent, IConstants.DEFAUl_REQUEST_CODE);
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        customAlertDialog.showAlertDialog(R.string.title_appreciated_user, R.string.text_seguro_de_salir, true, R.string.text_si, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(LandingActivity.this, LoginActivity.class);
+                LandingActivity.this.startActivity(intent);
+                LandingActivity.this.finish();
+            }
+        }, R.string.text_cancelar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
     }

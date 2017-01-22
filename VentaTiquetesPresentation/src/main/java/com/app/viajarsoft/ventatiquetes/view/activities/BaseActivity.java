@@ -2,6 +2,7 @@ package com.app.viajarsoft.ventatiquetes.view.activities;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import com.app.viajarsoft.ventatiquetes.utilities.custom_controls.CustomAlertDia
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.IValidateInternet;
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.ValidateInternet;
 import com.app.viajarsoft.ventatiquetes.presenters.BasePresenter;
+import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.IBaseView;
 import com.testfairy.TestFairy;
 
@@ -32,6 +34,19 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         this.validateInternet = new ValidateInternet(this);
         this.customAlertDialog = new CustomAlertDialog(this);
         TestFairy.begin(this, "9cfa7e8493314cae6d7d6265cff0399be9cb4b15");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IConstants.DEFAUl_REQUEST_CODE) {
+            switch (resultCode) {
+                case IConstants.UNAUTHORIZED_ERROR_CODE:
+                    setResult(IConstants.UNAUTHORIZED_ERROR_CODE);
+                    finish();
+                    break;
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -63,6 +78,32 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
     @Override
     public void dismissProgressDialog() {
         this.progressDialog.dismiss();
+    }
+
+    @Override
+    public void showAlertDialogUnauthorizedOnUiThread(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showAlertDialogUnauthorized(message);
+            }
+        });
+    }
+
+    private void showAlertDialogUnauthorized(String message) {
+        customAlertDialog.showAlertDialog(R.string.title_appreciated_user, message, false, R.string.text_aceptar, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startLoginActivity();
+            }
+        });
+    }
+
+    private void startLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        setResult(IConstants.UNAUTHORIZED_ERROR_CODE);
+        finish();
     }
 
     public void createProgressDialog() {

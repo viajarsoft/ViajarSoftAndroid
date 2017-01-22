@@ -1,6 +1,7 @@
 package com.app.viajarsoft.ventatiquetes.presenters;
 
 import com.app.viajarsoft.ventatiquetes.R;
+import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.IVenderPasajesView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.Viaje;
@@ -41,7 +42,11 @@ public class VenderPasajesPresenter extends BasePresenter<IVenderPasajesView> {
         try {
             getView().loadTicketsSpinnerOnUiThread(viajeBL.getTickets(viaje));
         } catch (RepositoryError repositoryError) {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            if (repositoryError.getIdError() == IConstants.UNAUTHORIZED_ERROR_CODE) {
+                getView().showAlertDialogUnauthorizedOnUiThread(repositoryError.getMessage());
+            } else {
+                getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            }
         } finally {
             getView().dismissProgressDialog();
         }
@@ -64,7 +69,11 @@ public class VenderPasajesPresenter extends BasePresenter<IVenderPasajesView> {
         try {
             getView().loadDestinationPricesOnUiThread(viajeBL.getDestinationPrices(viaje));
         } catch (RepositoryError repositoryError) {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            if (repositoryError.getIdError() == IConstants.UNAUTHORIZED_ERROR_CODE) {
+                getView().showAlertDialogUnauthorizedOnUiThread(repositoryError.getMessage());
+            } else {
+                getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            }
         } finally {
             getView().dismissProgressDialog();
         }
@@ -93,7 +102,11 @@ public class VenderPasajesPresenter extends BasePresenter<IVenderPasajesView> {
         try {
             getView().printTicketOnUiThread(viajeBL.sellTicket(viaje));
         } catch (RepositoryError repositoryError) {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            if (repositoryError.getIdError() == IConstants.UNAUTHORIZED_ERROR_CODE) {
+                getView().showAlertDialogUnauthorizedOnUiThread(repositoryError.getMessage());
+            } else {
+                getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            }
         } finally {
             getView().dismissProgressDialog();
         }

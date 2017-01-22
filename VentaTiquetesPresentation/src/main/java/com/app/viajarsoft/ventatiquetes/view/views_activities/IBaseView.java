@@ -13,4 +13,6 @@ public interface IBaseView {
     void showProgressDialog(int text);
 
     void dismissProgressDialog();
+
+    void showAlertDialogUnauthorizedOnUiThread(String message);
 }

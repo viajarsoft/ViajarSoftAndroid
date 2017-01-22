@@ -1,6 +1,7 @@
 package com.app.viajarsoft.ventatiquetes.presenters;
 
 import com.app.viajarsoft.ventatiquetes.R;
+import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILandingView;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.RepositoryError;
 import com.app.viajarsoft.ventatiquetesdomain.business_models.ResumenLiquidacion;
@@ -43,16 +44,20 @@ public class LandingPresenter extends BasePresenter<ILandingView> {
         try {
             getView().startVenderPasajesActivity(viajeBL.getBussesAndRoutes(codigooficina));
         } catch (RepositoryError repositoryError) {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            if (repositoryError.getIdError() == IConstants.UNAUTHORIZED_ERROR_CODE) {
+                getView().showAlertDialogUnauthorizedOnUiThread(repositoryError.getMessage());
+            } else {
+                getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            }
         } finally {
             getView().dismissProgressDialog();
         }
     }
 
     public void validateInternetToGetSummaryLiquidation(ResumenLiquidacion resumenLiquidacion) {
-        if(getValidateInternet().isConnected()){
+        if (getValidateInternet().isConnected()) {
             createThreadToGetSummaryLiquidation(resumenLiquidacion);
-        }else{
+        } else {
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
         }
 
@@ -74,8 +79,12 @@ public class LandingPresenter extends BasePresenter<ILandingView> {
             ResumenVentasPorLiquidar resumenVentasPorLiquidar = viajeBL.getSummaryLiquidation(resumenLiquidacion);
             getView().setIntentToLiquidarVentas(resumenVentasPorLiquidar.getVentaPorLiquidar());
         } catch (RepositoryError repositoryError) {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
-        }finally {
+            if (repositoryError.getIdError() == IConstants.UNAUTHORIZED_ERROR_CODE) {
+                getView().showAlertDialogUnauthorizedOnUiThread(repositoryError.getMessage());
+            } else {
+                getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            }
+        } finally {
             getView().dismissProgressDialog();
         }
     }

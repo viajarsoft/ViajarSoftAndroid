@@ -75,5 +75,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements ILogi
         intent.putExtra(IConstants.USUARIO, usuarioResponse);
         intent.putExtra(IConstants.CODIGOUSUARIO,usuario);
         startActivity(intent);
+        finish();
     }
 }

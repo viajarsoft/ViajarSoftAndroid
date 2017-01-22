@@ -13,6 +13,9 @@
     <string name="text_incorrect_email">Correo electrónico no válido, por favor verifique.</string>
 
     <string name="title_appreciated_user">Apreciado usuario</string>
+    <string name="text_seguro_de_salir">¿Seguro deseas salir de la aplicación?</string>
+    <string name="text_si">Sí</string>
+    <string name="text_cancelar">Cancelar</string>
     <string name="text_validate_internet">Por favor verifica que tu dispositivo tenga acceso a internet e intenta nuevamente.</string>
 
     <string name="title_vender_pasajes">Vender pasajes</string>
