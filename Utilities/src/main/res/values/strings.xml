@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Utilities</string>
+    <string name="app_name">Viajar Móvil</string>
 
     <string name="title_empty_fields">Campos incompletos</string>
     <string name="text_empty_fields">Debes ingresar todos los campos.</string>

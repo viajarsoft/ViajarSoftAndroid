@@ -94,7 +94,8 @@ public class LandingActivity extends BaseActivity<LandingPresenter> implements I
 
     private void loadToolbar() {
         Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_viajar_soft);
+        toolbar.setTitle(IConstants.EMPTY_STRING);
+        toolbar.setNavigationIcon(R.drawable.viajar_movil);
         setSupportActionBar(toolbar);
     }
 
