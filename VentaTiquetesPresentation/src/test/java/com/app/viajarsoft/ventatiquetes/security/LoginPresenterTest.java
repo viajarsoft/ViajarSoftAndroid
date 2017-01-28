@@ -142,7 +142,7 @@ public class LoginPresenterTest {
         usuarioResponse.setToken("sgg65456");
         when(securityRepository.login(usuarioRequest)).thenReturn(usuarioResponse);
         loginPresenter.login(usuarioRequest);
-        verify(loginView).startLanding(usuarioResponse);
+        verify(loginView).startLanding(usuarioResponse, "");
     }
 
     @Test

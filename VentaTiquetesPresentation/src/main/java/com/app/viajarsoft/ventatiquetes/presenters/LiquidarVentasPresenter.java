@@ -25,9 +25,9 @@ public class LiquidarVentasPresenter extends BasePresenter<ILiquidarVentasView> 
     }
 
     public void validateInternetToGetLiquidation(LiquidacionVentas liquidacionVentas) {
-        if(getValidateInternet().isConnected()){
+        if (getValidateInternet().isConnected()) {
             createThreadToGetLiquidation(liquidacionVentas);
-        }else{
+        } else {
             getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, R.string.text_validate_internet);
         }
     }
@@ -46,11 +46,15 @@ public class LiquidarVentasPresenter extends BasePresenter<ILiquidarVentasView> 
     public void getLiquidation(LiquidacionVentas liquidacionVentas) {
 
         try {
-            ResumenLiquidacionImpresion  resumenLiquidacionImpresion = viajeBL.getLiquidation(liquidacionVentas);
-             getView().printZplResumen(resumenLiquidacionImpresion.getZplResumen());
+            ResumenLiquidacionImpresion resumenLiquidacionImpresion = viajeBL.getLiquidation(liquidacionVentas);
+            getView().printZplResumen(resumenLiquidacionImpresion.getZplResumen());
         } catch (RepositoryError repositoryError) {
-            getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
-        }finally {
+            if (repositoryError.getIdError() == IConstants.UNAUTHORIZED_ERROR_CODE) {
+                getView().showAlertDialogUnauthorizedOnUiThread(repositoryError.getMessage());
+            } else {
+                getView().showAlertDialogGeneralInformationOnUiThread(R.string.title_appreciated_user, repositoryError.getMessage());
+            }
+        } finally {
             getView().dismissProgressDialog();
         }
     }
