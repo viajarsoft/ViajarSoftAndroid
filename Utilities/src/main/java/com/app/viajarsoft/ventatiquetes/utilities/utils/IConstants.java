@@ -11,7 +11,8 @@ public interface IConstants {
     /**
      * URLs
      */
-    String URL_DLLO = "http://apivs.azurewebsites.net/api";
+    //String URL_DLLO = "http://apivs.azurewebsites.net/api";
+    String URL_DLLO = "http://vmpiloto1.cloudapp.net:8082/api";
 
     /**
      * Keys
