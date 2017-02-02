@@ -239,7 +239,7 @@ public class Mapper {
         ventaPorLiquidar.setFechaVenta(ventaPorLiquidarDTO.getFechaVenta());
         ventaPorLiquidar.setCantidad(ventaPorLiquidarDTO.getCantidad());
         ventaPorLiquidar.setValorTiquete(ventaPorLiquidarDTO.getValorTiquete());
-        ventaPorLiquidar.setValorSeguro(ventaPorLiquidar.getValorSeguro());
+        ventaPorLiquidar.setValorSeguro(ventaPorLiquidarDTO.getValorSeguro());
         ventaPorLiquidar.setNombreTaquilla(ventaPorLiquidarDTO.getNombreTaquilla());
         return ventaPorLiquidar;
     }
