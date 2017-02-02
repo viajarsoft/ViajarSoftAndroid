@@ -119,7 +119,8 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     private void setInfo() {
         liquidar_tvUsuario.setText(ventaPorLiquidar.getNombreTaquilla());
         liquidar_tvPasajesVendidos.setText(ventaPorLiquidar.getCantidad() + "");
-        liquidar_tvValorTotal.setText(ventaPorLiquidar.getValorTiquete().toString());
+        Double valorTotal = ventaPorLiquidar.getValorTiquete() + ventaPorLiquidar.getValorSeguro();
+        liquidar_tvValorTotal.setText(valorTotal + "");
     }
 
     @Override
