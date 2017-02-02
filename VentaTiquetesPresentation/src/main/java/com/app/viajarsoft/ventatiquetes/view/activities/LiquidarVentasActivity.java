@@ -44,7 +44,7 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         this.usuario = getIntent().getStringExtra(IConstants.CODIGOUSUARIO);
         this.ventaPorLiquidar = (VentaPorLiquidar) getIntent().getSerializableExtra(IConstants.SUMMARY_LIQUIDATION);
         customSharedPreferences = new CustomSharedPreferences(LiquidarVentasActivity.this);
-        impresionZpl = new ImpresionZpl();
+        impresionZpl = new ImpresionZpl(this);
         loadViews();
         loadListener();
         setInfo();
@@ -126,5 +126,15 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
     public void printZplResumen(String zplResumen) {
         String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
         impresionZpl.printZpl(zplResumen, addressMac);
+    }
+
+    @Override
+    public void finishActivity() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LiquidarVentasActivity.this.finish();
+            }
+        });
     }
 }

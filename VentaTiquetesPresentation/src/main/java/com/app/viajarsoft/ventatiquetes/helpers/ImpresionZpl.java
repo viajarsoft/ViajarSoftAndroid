@@ -4,6 +4,8 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.ICustomSharedPreferences;
+import com.app.viajarsoft.ventatiquetes.view.activities.LiquidarVentasActivity;
+import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
 import com.zebra.sdk.comm.BluetoothConnectionInsecure;
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
@@ -13,6 +15,12 @@ import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
  */
 
 public class ImpresionZpl extends AppCompatActivity implements IImpresionZpl{
+
+    private ILiquidarVentasView liquidarVentasView;
+
+    public ImpresionZpl(ILiquidarVentasView liquidarVentasView) {
+        this.liquidarVentasView = liquidarVentasView;
+    }
 
     @Override
     public void printZpl(final String printZpl, final String mac) {
@@ -46,6 +54,8 @@ public class ImpresionZpl extends AppCompatActivity implements IImpresionZpl{
                 } catch (Exception e) {
                     // Handle communications error here.
                     e.printStackTrace();
+                } finally {
+                    liquidarVentasView.finishActivity();
                 }
             }
         });
