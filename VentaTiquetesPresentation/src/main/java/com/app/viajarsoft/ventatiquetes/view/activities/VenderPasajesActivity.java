@@ -63,7 +63,7 @@ public class VenderPasajesActivity extends BaseActivity<VenderPasajesPresenter> 
         getPresenter().inject(this, getValidateInternet());
         createProgressDialog();
         this.customSharedPreferences = new CustomSharedPreferences(this);
-        this.impresionZpl = new ImpresionZpl();
+        this.impresionZpl = new ImpresionZpl(this);
         this.usuarioResponse = (UsuarioResponse) getIntent().getSerializableExtra(IConstants.USUARIO);
         this.bussesAndRoutes = (BussesAndRoutes) getIntent().getSerializableExtra(IConstants.BUSSES_AND_ROUTES);
         loadToolbar();

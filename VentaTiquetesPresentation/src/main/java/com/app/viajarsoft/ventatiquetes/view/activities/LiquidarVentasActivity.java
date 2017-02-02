@@ -127,14 +127,4 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         String addressMac = customSharedPreferences.getString(IConstants.ADDRESSMAC);
         impresionZpl.printZpl(zplResumen, addressMac);
     }
-
-    @Override
-    public void finishActivity() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LiquidarVentasActivity.this.finish();
-            }
-        });
-    }
 }

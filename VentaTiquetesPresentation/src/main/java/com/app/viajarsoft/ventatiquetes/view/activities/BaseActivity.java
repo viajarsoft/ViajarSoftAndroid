@@ -90,6 +90,16 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         });
     }
 
+    @Override
+    public void finishActivity() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                BaseActivity.this.finish();
+            }
+        });
+    }
+
     private void showAlertDialogUnauthorized(String message) {
         customAlertDialog.showAlertDialog(R.string.title_appreciated_user, message, false, R.string.text_aceptar, new DialogInterface.OnClickListener() {
             @Override

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.app.viajarsoft.ventatiquetes.utilities.helpers.ICustomSharedPreferences;
 import com.app.viajarsoft.ventatiquetes.view.activities.LiquidarVentasActivity;
+import com.app.viajarsoft.ventatiquetes.view.views_activities.IBaseView;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.ILiquidarVentasView;
 import com.zebra.sdk.comm.BluetoothConnectionInsecure;
 import com.zebra.sdk.comm.Connection;
@@ -16,10 +17,10 @@ import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
 public class ImpresionZpl extends AppCompatActivity implements IImpresionZpl{
 
-    private ILiquidarVentasView liquidarVentasView;
+    private IBaseView baseView;
 
-    public ImpresionZpl(ILiquidarVentasView liquidarVentasView) {
-        this.liquidarVentasView = liquidarVentasView;
+    public ImpresionZpl(IBaseView baseView) {
+        this.baseView = baseView;
     }
 
     @Override
@@ -55,7 +56,7 @@ public class ImpresionZpl extends AppCompatActivity implements IImpresionZpl{
                     // Handle communications error here.
                     e.printStackTrace();
                 } finally {
-                    liquidarVentasView.finishActivity();
+                    baseView.finishActivity();
                 }
             }
         });
