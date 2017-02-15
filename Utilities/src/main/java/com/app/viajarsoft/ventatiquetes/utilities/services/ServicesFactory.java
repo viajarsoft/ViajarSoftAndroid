@@ -19,7 +19,7 @@ import retrofit.converter.GsonConverter;
  */
 public class ServicesFactory {
 
-    private static final String API_BASE_PATH = IConstants.URL_DLLO;
+    private static final String API_BASE_PATH = IConstants.URL_PRODUCCION;
     private RestAdapter restAdapter;
 
     /**
