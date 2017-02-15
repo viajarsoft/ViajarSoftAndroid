@@ -44,7 +44,7 @@ public class LiquidarVentasActivity extends BaseActivity<LiquidarVentasPresenter
         this.usuario = getIntent().getStringExtra(IConstants.CODIGOUSUARIO);
         this.ventaPorLiquidar = (VentaPorLiquidar) getIntent().getSerializableExtra(IConstants.SUMMARY_LIQUIDATION);
         customSharedPreferences = new CustomSharedPreferences(LiquidarVentasActivity.this);
-        impresionZpl = new ImpresionZpl(this);
+        impresionZpl = new ImpresionZpl();
         loadViews();
         loadListener();
         setInfo();

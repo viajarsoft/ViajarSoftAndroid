@@ -17,12 +17,6 @@ import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth;
 
 public class ImpresionZpl extends AppCompatActivity implements IImpresionZpl{
 
-    private IBaseView baseView;
-
-    public ImpresionZpl(IBaseView baseView) {
-        this.baseView = baseView;
-    }
-
     @Override
     public void printZpl(final String printZpl, final String mac) {
         runOnUiThread(new Runnable() {
@@ -55,8 +49,6 @@ public class ImpresionZpl extends AppCompatActivity implements IImpresionZpl{
                 } catch (Exception e) {
                     // Handle communications error here.
                     e.printStackTrace();
-                } finally {
-                    baseView.finishActivity();
                 }
             }
         });

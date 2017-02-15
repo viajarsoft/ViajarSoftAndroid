@@ -56,7 +56,7 @@ public class ImpresionActivity extends BaseActivity<ImpresionPresenter> implemen
         getPresenter().inject(this, getValidateInternet());
         getDataIntent();
         this.customSharedPreferences = new CustomSharedPreferences(this);
-        this.impresionZpl = new ImpresionZpl(this);
+        this.impresionZpl = new ImpresionZpl();
         asignarDatos();
         impresion_rvList = (RecyclerView) findViewById(R.id.impresion_rvList);
         layoutManager = new LinearLayoutManager(this);
