@@ -14,7 +14,6 @@ import com.app.viajarsoft.ventatiquetes.utilities.helpers.ValidateInternet;
 import com.app.viajarsoft.ventatiquetes.presenters.BasePresenter;
 import com.app.viajarsoft.ventatiquetes.utilities.utils.IConstants;
 import com.app.viajarsoft.ventatiquetes.view.views_activities.IBaseView;
-import com.testfairy.TestFairy;
 
 
 /**
@@ -33,7 +32,6 @@ public class BaseActivity<T extends BasePresenter> extends AppCompatActivity imp
         super.onCreate(savedInstanceState);
         this.validateInternet = new ValidateInternet(this);
         this.customAlertDialog = new CustomAlertDialog(this);
-        TestFairy.begin(this, "9cfa7e8493314cae6d7d6265cff0399be9cb4b15");
     }
 
     @Override
